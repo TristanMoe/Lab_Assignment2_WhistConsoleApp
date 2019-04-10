@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
@@ -13,6 +14,13 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         public event EventHandler GameHasStarted;
         public event EventHandler FindPreviousGame;
+
+        
+        public void SubscribeToViews(EndGameView endgame, WinnerView wingame)
+        {
+           //TODO Subscribe to events 
+        }
+
 
         protected virtual void OnFindPreviousGame(EventArgs e)
         {
@@ -27,13 +35,19 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             handler?.Invoke(this, e);
         }
 
+        public void HandleEndGameEvent(object sender, EventArgs e)
+        {
+            StartGame();
+        }
+
+
         public void StartGame()
         {
             while (true)
             { 
                 Console.Clear();
-                Console.WriteLine("Welcome to Whist Point Calculator");
-                Console.WriteLine("Use keys to navigation through the console");
+                Console.WriteLine("Welcome To Whist Point Calculator");
+                Console.WriteLine("Use Keys To Navigation Through The Console");
                 Console.WriteLine("1: Create New Game");
                 Console.WriteLine("2: Find Previous Games");
 
@@ -49,12 +63,13 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         case ConsoleKey.D2:
                             OnFindPreviousGame(EventArgs.Empty);
                             return; 
-                        default: throw new Exception("Invalid input!");
+                        default: throw new Exception("Invalid Input!");
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                    Thread.Sleep(1);
                 }
             }
         }

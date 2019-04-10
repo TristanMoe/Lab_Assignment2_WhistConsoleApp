@@ -14,6 +14,7 @@ namespace Lab_Assignment2_WhistConsoleApp
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);
             var InGameView = new InGameView(GameInformationView);
+            var GameIndexView = new GameIndexView(StartGameView, db);
 
             StartGameView.StartGame();
 

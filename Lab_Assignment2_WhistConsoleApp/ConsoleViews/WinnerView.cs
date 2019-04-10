@@ -8,7 +8,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// Player X and Player Y won the game
     /// Press enter to proceed 
     /// </summary>
-    class WinnerView
+    public class WinnerView
     {
     }
 }

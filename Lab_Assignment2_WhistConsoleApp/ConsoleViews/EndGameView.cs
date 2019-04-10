@@ -8,7 +8,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// Game ended with no winner
     /// Press enter to proceed 
     /// </summary>
-    class EndGameView
+    public class EndGameView
     {
     }
 }

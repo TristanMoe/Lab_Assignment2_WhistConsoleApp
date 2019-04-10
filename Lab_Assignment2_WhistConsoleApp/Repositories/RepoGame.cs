@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
@@ -14,6 +16,34 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
         public RepoGame(DataContext db)
         {
             _db = db; 
+        }
+
+        public List<Games> GetAllGames()
+        {
+            var games = _db.Games
+                .Include(g => g.Location)
+                .Include(g => g.GamePlayers)
+                .ThenInclude(gp => gp.Player)
+                .Include(g => g.GameRounds)
+                .ThenInclude(gr => gr.GRPs)
+                .ToList();
+
+            return games; 
+        }
+
+        public Games GetGame(string gamename)
+        {
+            var game = _db.Games
+                .Include(g => g.Location)
+                .Include(g => g.GamePlayers)
+                .ThenInclude(gp => gp.Player)
+                .Include(g => g.GameRounds)
+                .ThenInclude(gr => gr.GRPs)
+                .FirstOrDefault(g => g.Name == gamename); 
+            if(game == null)
+                throw new Exception("Game Was Not Found!");
+
+            return game; 
         }
 
         public GameInformationEventArg RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname)
@@ -54,10 +84,10 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             game.Ended = false;
             game.Started = true;
 
-            _db.Add(players);
-            _db.Add(gameplayers);
-            _db.Add(location);
-            _db.Add(game); 
+            _db.Players.AddRange(players);
+            _db.GamePlayers.AddRange(gameplayers);
+            _db.Locations.Add(location);
+            _db.Games.Add(game); 
 
             _db.SaveChanges(); 
             
