@@ -29,10 +29,18 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
 
         }
-        
-        public void CreateNewGame(object sender, EventArgs e)
+
+        public void GameStarted(object sender, EventArgs e)
         {
-            Console.WriteLine("Please Enter Your Game Name: ");
+            CreateNewGame();
+        }
+        
+        public void CreateNewGame()
+        {
+            while (true)
+            {
+                Console.WriteLine("Please Enter Your Game Name: ");
+            }
 
         }
     }
