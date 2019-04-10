@@ -1,5 +1,7 @@
 ﻿using System;
 using Lab_Assignment2_WhistConsoleApp.ConsoleViews;
+using Lab_Assignment2_WhistPointCalculator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Assignment2_WhistConsoleApp
 {
@@ -7,7 +9,12 @@ namespace Lab_Assignment2_WhistConsoleApp
     {
         static void Main(string[] args)
         {
+            var db = new DataContext();
+
             var StartGameView = new StartPageView(); 
+            var GameInformationView = new GameInformation(StartGameView, db);
+            var InGameView = new InGameView(GameInformationView);
+
             StartGameView.StartGame();
 
             Console.ReadKey();

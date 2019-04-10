@@ -31,8 +31,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             while (true)
             { 
-
-
                 Console.Clear();
                 Console.WriteLine("Welcome to Whist Point Calculator");
                 Console.WriteLine("Use keys to navigation through the console");
