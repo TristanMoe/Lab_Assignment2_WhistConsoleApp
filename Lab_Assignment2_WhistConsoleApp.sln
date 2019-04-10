@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab_Assignment2_WhistConsoleApp", "Lab_Assignment2_WhistConsoleApp\Lab_Assignment2_WhistConsoleApp.csproj", "{94557282-D960-4458-9F2C-56B4145BE53F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94557282-D960-4458-9F2C-56B4145BE53F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94557282-D960-4458-9F2C-56B4145BE53F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94557282-D960-4458-9F2C-56B4145BE53F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94557282-D960-4458-9F2C-56B4145BE53F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF61AF3B-CA92-4FCB-A839-8F5B1F948C37}
+	EndGlobalSection
+EndGlobal
