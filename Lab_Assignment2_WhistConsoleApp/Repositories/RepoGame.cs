@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Assignment2_WhistConsoleApp.Repositories
 {
     public class RepoGame
     {
-        public static void RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname)
+        public DbContext _db;
+
+        public RepoGame(DbContext db)
+        {
+            _db = db; 
+        }
+
+        public GameInformationEventArg RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname)
         {
             //Create Game
             var game = new Games();
@@ -24,7 +33,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             //Create GamePlayers
             var gameplayers = new List<GamePlayers>(); 
 
-            for (int i = 0; i <= firstnames.Length; i++)
+            for (int i = 0; i < firstnames.Length; i++)
             {
                 //Players
                 var player = new Players();
@@ -43,7 +52,18 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             //Start Game
             game.Updated = DateTime.Now;
             game.Ended = false;
-            game.Started = true; 
+            game.Started = true;
+
+            //TODO: Missing DB adds 
+            _db.SaveChanges(); 
+            
+
+            //Create EventArg
+            var eventArg = new GameInformationEventArg();
+            eventArg.Game = game;
+            eventArg.GamePlayers = gameplayers;
+
+            return eventArg; 
         }
             
     }
