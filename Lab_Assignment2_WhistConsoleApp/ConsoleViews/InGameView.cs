@@ -88,7 +88,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 }
             }
         }
-
         #endregion
     }
 }
