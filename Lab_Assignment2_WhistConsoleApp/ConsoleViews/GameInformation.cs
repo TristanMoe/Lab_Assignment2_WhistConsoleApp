@@ -18,15 +18,15 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// </summary>
     public class GameInformation
     {
-        public event EventHandler GameCreated;
         private string Gamename { get; set; }
+        private string Location { get; set; }
         private string[] Firstnames { get; set; }
         private string[] Lastnames { get; set; }
         public event EventHandler<GameInformationEventArg> GameCreated;
 
         protected virtual void OnGameCreated(GameInformationEventArg e)
         {
-            EventHandler handler = GameCreated;
+            EventHandler<GameInformationEventArg> handler = GameCreated;
             handler?.Invoke(this, e);
         }
 
@@ -48,9 +48,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 try
                 {
                     Console.Clear();
+
                     Console.Write("Please Enter Your Game Name: ");
-                    var gamename = Console.ReadLine();
-                    Console.WriteLine("\n Please Enter All Four Players Names:");
+                    Gamename = Console.ReadLine();
+
+                    Console.Write("Please Enter Location: ");
+                    Location = Console.ReadLine();
+
+                    Console.WriteLine("Please Enter All Four Players Names:");
                     for (int i = 0; i <= 4; i++)
                     {
                         Console.WriteLine($"Player {i}: ");
@@ -59,14 +64,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         Console.Write("\n Lastname: ");
                         Lastnames[i] = Console.ReadLine();
                     }
-
-                    Console.WriteLine("\n Press Enter To Start Game");
+                    
+                    Console.WriteLine("Press Enter To Start Game");
 
                     var input = Console.ReadKey(true).Key;
 
                     if (input == ConsoleKey.Enter)
                     {
-                        RepoGame.RepoCreateANewGame(Gamename, Firstnames, Lastnames);
+                        RepoGame.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
                     }
                     else
                     {
