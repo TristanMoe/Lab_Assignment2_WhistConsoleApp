@@ -9,5 +9,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// </summary>
     class GameIndexView
     {
+
     }
 }
