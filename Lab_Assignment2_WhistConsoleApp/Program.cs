@@ -1,4 +1,5 @@
 ﻿using System;
+using Lab_Assignment2_WhistConsoleApp.ConsoleViews;
 
 namespace Lab_Assignment2_WhistConsoleApp
 {
@@ -6,7 +7,11 @@ namespace Lab_Assignment2_WhistConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var StartGameView = new StartPageView(); 
+            StartGameView.StartGame();
+
+            Console.ReadKey();
+
         }
     }
 }

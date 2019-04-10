@@ -14,7 +14,26 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// Player 4:
     /// Press Enter For Start
     /// </summary>
-    class GameInformation
+    public class GameInformation
     {
+        public event EventHandler GameCreated;
+
+        protected virtual void OnGameCreated(EventArgs e)
+        {
+            EventHandler handler = GameCreated;
+            handler?.Invoke(this, e);
+        }
+
+
+        public GameInformation(EventHandler eventsub)
+        {
+
+        }
+        
+        public void CreateNewGame(object sender, EventArgs e)
+        {
+            Console.WriteLine("Please Enter Your Game Name: ");
+
+        }
     }
 }
