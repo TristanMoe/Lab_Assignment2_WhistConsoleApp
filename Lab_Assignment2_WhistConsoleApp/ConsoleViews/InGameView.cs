@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.Events;
+using Lab_Assignment2_WhistPointCalculator;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
@@ -12,16 +14,33 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     class InGameView
     {
         public GameInformation GameInformation { get; private set; }
+        public Games Game { get; set; }
+        public List<GamePlayers> GamePlayers { get; set; }
 
         public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
-            // gameInformation += gameInformationHandler()
+            GamePlayers = new List<GamePlayers>();
+            GameInformation.GameCreated += HandleGameInformationEvent;
         }
 
-        private void HandleGameInformationEvent(object sender, EventArgs e)
+        private void HandleGameInformationEvent(object sender, GameInformationEventArg e)
         {
             Console.Clear();
+            try
+            {
+                if (e.Game == null || e.GamePlayers == null)
+                    throw new ArgumentNullException("No gameinformation received!");
+
+                Game = e.Game;
+                GamePlayers = e.GamePlayers;
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+
             Console.WriteLine("--------------------- Choose action ---------------------");
             Console.WriteLine("1. Add round");
             Console.WriteLine("2. End game");
@@ -42,18 +61,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     }
                     throw new Exception("Must choose options 1 or 2, try again");
                 }
-                catch (Exception Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(Exception);
+                    Console.WriteLine(ex);
                 }
             }
         }
-
-        public void InGame()
-        {
-
-        }
-
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.Events;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
@@ -16,7 +17,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// </summary>
     public class GameInformation
     {
-        public event EventHandler GameCreated;
+        public event EventHandler<GameInformationEventArg> GameCreated;
 
         protected virtual void OnGameCreated(EventArgs e)
         {
