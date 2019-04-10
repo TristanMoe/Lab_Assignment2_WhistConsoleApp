@@ -9,9 +9,9 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
 {
     public class RepoGame
     {
-        public DbContext _db;
+        public DataContext _db;
 
-        public RepoGame(DbContext db)
+        public RepoGame(DataContext db)
         {
             _db = db; 
         }
@@ -45,7 +45,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 var gameplayer = new GamePlayers();
                 gameplayer.PlayerId = player.PlayerId;
                 gameplayer.GamesId = game.GamesId;
-                gameplayer.PlayerPosition = i; 
+                gameplayer.PlayerPosition = i;
                 gameplayers.Add(gameplayer);
             }
 
@@ -54,10 +54,13 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             game.Ended = false;
             game.Started = true;
 
-            //TODO: Missing DB adds 
+            _db.Add(players);
+            _db.Add(gameplayers);
+            _db.Add(location);
+            _db.Add(game); 
+
             _db.SaveChanges(); 
             
-
             //Create EventArg
             var eventArg = new GameInformationEventArg();
             eventArg.Game = game;

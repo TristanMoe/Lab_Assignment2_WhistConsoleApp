@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistConsoleApp.Repositories;
+using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
@@ -37,7 +38,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         }
 
 
-        public GameInformation(StartPageView startPageSubscribe, DbContext db)
+        public GameInformation(StartPageView startPageSubscribe, DataContext db)
         {
             Repo = new RepoGame(db);
             StartPage = startPageSubscribe;
