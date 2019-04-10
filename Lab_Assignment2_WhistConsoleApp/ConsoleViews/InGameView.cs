@@ -13,18 +13,34 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// </summary>
     class InGameView
     {
-        public GameInformation GameInformation { get; private set; }
-        public Games Game { get; set; }
-        public List<GamePlayers> GamePlayers { get; set; }
+        #region Constructor
 
         public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
             GamePlayers = new List<GamePlayers>();
-            GameInformation.GameCreated += HandleGameInformationEvent;
+            GameInformation.GameCreated += HandleGameCreatedEvent;
         }
 
-        private void HandleGameInformationEvent(object sender, GameInformationEventArg e)
+        #endregion
+
+        #region Properties
+
+        public event EventHandler<GameInformationEventArg> RoundAddedEvent;
+        public GameInformation GameInformation { get; private set; }
+        public Games Game { get; set; }
+        public List<GamePlayers> GamePlayers { get; set; }
+
+        #endregion
+
+        #region Eventhandlers
+
+        protected virtual void OnRoundAddedEvent(GameInformationEventArg e)
+        {
+            RoundAddedEvent?.Invoke(this, e);
+        }
+
+        private void HandleGameCreatedEvent(object sender, GameInformationEventArg e)
         {
             Console.Clear();
             try
@@ -38,10 +54,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine(ex);
-                throw;
+                return;
             }
 
-            Console.WriteLine("--------------------- Choose action ---------------------");
+            Console.WriteLine("Choose action:");
             Console.WriteLine("1. Add round");
             Console.WriteLine("2. End game");
             while (true)
@@ -51,12 +67,17 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     string action = Console.ReadLine();
                     if (action.Equals("1"))
                     {
-                        // invoke addgame event
+                        // Raising round added event
+                        OnRoundAddedEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
                         return;
                     }
                     if (action.Equals("2"))
                     {
-                        //invoke endgame view
+                        Console.WriteLine("Game ended");
+                        Console.WriteLine("No winner");
+
+                        // Rasing start page event
+
                         return;
                     }
                     throw new Exception("Must choose options 1 or 2, try again");
@@ -67,5 +88,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 }
             }
         }
+
+        #endregion
     }
 }

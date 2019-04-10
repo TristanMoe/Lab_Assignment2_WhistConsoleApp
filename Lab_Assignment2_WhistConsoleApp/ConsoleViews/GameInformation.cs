@@ -18,7 +18,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// </summary>
     public class GameInformation
     {
-        public event EventHandler GameCreated;
         private string Gamename { get; set; }
         private string[] Firstnames { get; set; }
         private string[] Lastnames { get; set; }
@@ -26,8 +25,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
         protected virtual void OnGameCreated(GameInformationEventArg e)
         {
-            EventHandler handler = GameCreated;
-            handler?.Invoke(this, e);
+            //EventHandler handler = GameCreated;
+            //handler?.Invoke(this, e);
         }
 
 
