@@ -21,10 +21,10 @@ namespace Lab_Assignment2_WhistPointCalculator
         }
         public async Task<Games> ListGameWithPlayers(int? id)
         {
-            var games=await _db.Games
+            var games = await _db.Games
                 .Include(players => players.GamePlayers)
-                .ThenInclude(p=>p.Player)
-                .SingleAsync(p=>p.GamesId==id);
+                .ThenInclude(p => p.Player)
+                .SingleAsync(p => p.GamesId == id);
             return games;
         }
 
@@ -39,36 +39,17 @@ namespace Lab_Assignment2_WhistPointCalculator
             return game;
 
 
-            /* Console.WriteLine("Bids, result and points for every round:");
-            
-             foreach (var round in game.GameRounds)
-             {              
-                 Console.WriteLine($"Round :{round.RoundNumber}");
-                 foreach (var player in round.GRPs)
-                 {
-                     Console.WriteLine($"{player.GamePlayer.Player.FirstName} {player.GamePlayer.Player.LastName}");
-                     Console.WriteLine($"Bid: {player.}");
-                     Console.WriteLine($"Result:");
-                     Console.WriteLine($"Points:{player.Points}");
-                 }
- 
-                 Console.WriteLine($"result of round {}");
-             }
-             //Tristan er langsom så funktionen er ikke færdig*/
+         
         }
 
-       /* public async Task<List<Games>> GameWinners(DataContext db)
-        {
-            var games=await db.Games
-                .Include(p=>p.Wi)
-        }*/
+        /*
 
         public void CreateNewPlayer(Players player)
         {
             _db.Players.Add(player);
             //var game=new Games{Name=name,};
         }
-
+        
         public async Task EditPlayer(int id)
         {
             var player = _db.Players.Single(p => p.PlayerId == id);
@@ -85,7 +66,7 @@ namespace Lab_Assignment2_WhistPointCalculator
 
         public List<Players> GetNameOfPlayersInGameRound(int gameId)
         {
-            List<Players> players = new List<Players>(); 
+            List<Players> players = new List<Players>();
 
             var gamePlayers = _db.GamePlayers
                 .Where(gp => gp.GamesId == gameId)
@@ -95,23 +76,23 @@ namespace Lab_Assignment2_WhistPointCalculator
             {
                 players = _db.Players
                     .Where(p => p.PlayerId == gamePlayer.PlayerId)
-                    .ToList(); 
+                    .ToList();
             }
 
-            return players; 
+            return players;
         }
 
         public int CreateNewGame(string name, List<string> playersFirstnames, string locationName)
         {
 
-            var game = new Games { Started = true, Ended = false, Updated = DateTime.Now, Name = name};
-            var location = new Location {Name = locationName}; 
+            var game = new Games { Started = true, Ended = false, Updated = DateTime.Now, Name = name };
+            var location = new Location { Name = locationName };
             var gameRounds = new GameRounds();
             game.Location = location;
             game.GameRounds = new List<GameRounds>();
             game.GamePlayers = new List<GamePlayers>();
 
-            int i = 1; 
+            int i = 1;
             //set foreign key for each gameplay (assumes that they exist in database)
             foreach (var playerName in playersFirstnames)
             {
@@ -137,13 +118,13 @@ namespace Lab_Assignment2_WhistPointCalculator
                 //Add GameRoundPlayer to database
                 _db.GameRoundPlayers.Add(gameRoundPlayer);
 
-                i++; 
+                i++;
             }
-            
+
             var entity = _db.Games.Add(game);
             _db.GameRounds.Add(gameRounds);
             _db.Locations.Add(location);
-            
+
             _db.SaveChanges();
 
             return entity.Entity.GamesId;
@@ -183,7 +164,7 @@ namespace Lab_Assignment2_WhistPointCalculator
 
             foreach (var gamePlayer in gameplayers)
             {
-                gamePlayer.Points += trickswon; 
+                gamePlayer.Points += trickswon;
             }
 
             var round = new Rounds
@@ -221,9 +202,9 @@ namespace Lab_Assignment2_WhistPointCalculator
 
             //    gamePlayer.Points += grp.Points; 
             //}
-            game.Ended = true; 
+            game.Ended = true;
+            */
 
-
-        }
+        
     }
 }

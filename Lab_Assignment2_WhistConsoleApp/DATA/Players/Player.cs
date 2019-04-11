@@ -12,7 +12,7 @@ namespace Lab_Assignment2_WhistPointCalculator
         //Attributes
 
         //Primary Key
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PlayerId { get; set; }
 
         [Required]
@@ -24,6 +24,6 @@ namespace Lab_Assignment2_WhistPointCalculator
         public string LastName { get; set; }
 
         //Navigation Property
-        public List<GamePlayers> GamePlayers { get; set; }
+        public List<GamePlayer> GamePlayers { get; set; }
     }
 }

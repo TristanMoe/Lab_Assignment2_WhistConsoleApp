@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Lab_Assignment2_WhistPointCalculator
@@ -16,12 +17,12 @@ namespace Lab_Assignment2_WhistPointCalculator
                 @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
         }
         #region Entity Declaration
-        public DbSet<GamePlayers> GamePlayers { get; set; }
+        public DbSet<GamePlayer> GamePlayers { get; set; }
         public DbSet<Players> Players { get; set; }
         public DbSet<Games> Games { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<GameRounds> GameRounds { get; set; }
-        public DbSet<Rounds> Rounds { get; set; }
+       
         public DbSet<GameRoundPlayers> GameRoundPlayers { get; set; }
         #endregion
 
@@ -49,15 +50,15 @@ namespace Lab_Assignment2_WhistPointCalculator
             modelBuilder.Entity<Location>()
                 .HasKey(p => p.LocationId);
 
-            modelBuilder.Entity<GamePlayers>()
-                .HasKey(k => new { k.GamesId, k.PlayerPosition });
+            modelBuilder.Entity<GamePlayer>()
+                .HasKey(k => k.GamePlayerId);
 
             modelBuilder.Entity<GameRoundPlayers>()
-                .HasKey(k => k.PlayerPosition); 
+                .HasKey(k => k.GameRoundPlayerId);
 
+            modelBuilder.Entity<Team>()
+                .HasKey(k => k.TeamId);
 
-            modelBuilder.Entity<Rounds>()
-                .HasKey(k => k.GameRoundsId);
             #endregion
 
             #region Games & Relations
@@ -87,23 +88,21 @@ namespace Lab_Assignment2_WhistPointCalculator
                 .HasForeignKey(g => g.GamesId); 
             #endregion
 
-            #region Game Rounds & Relations
+           
 
             
             // <summary>
             // A Game Round can consists of several rounds
             // </summary>
-            modelBuilder.Entity<GameRounds>()
-                .HasMany(gr => gr.Rounds)
-                .WithOne(r => r.Gameround)
-                .HasForeignKey(gr => gr.GameRoundsId);
+         
 
-            modelBuilder.Entity<GameRounds>()
-                .HasMany(gr => gr.GRPs)
-                .WithOne(grp => grp.GameRound)
-                .HasForeignKey(grp => grp.GameRoundsId);
+            modelBuilder.Entity<GameRoundPlayers>()
+                .HasOne(gr => gr.GameRound)
+                .WithMany(grp => grp.GRPs)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(grp => grp.GameRoundId);
             
-            #endregion
+           
 
             // <summary>
             // Player has one Gameplayer,
@@ -111,27 +110,44 @@ namespace Lab_Assignment2_WhistPointCalculator
             // </summary>
             #region Players & GamePlayers
             modelBuilder.Entity<Players>()
-                .HasMany(gm => gm.GamePlayers)
-                .WithOne(p => p.Player)
+                .HasMany(p => p.GamePlayers)
+                .WithOne(gp => gp.Player)
                 .HasForeignKey(gm => gm.PlayerId);
             #endregion
 
             #region PlayerPosition Relations 
-            modelBuilder.Entity<GamePlayers>()
-                .HasOne(gp => gp.WinnerNormalRound)
-                .WithOne(nr => nr.BidWinnerGameplayer)
-                .HasForeignKey<Rounds>(nr => new {nr.BidWinnerPositionId, nr.GameRoundsId});
+            
 
-            modelBuilder.Entity<GamePlayers>()
-                .HasOne(gp => gp.WinnerMateNormalRound)
-                .WithOne(nr => nr.BidWinnerMateGameplayer)
-                .HasForeignKey<Rounds>(nr => new { nr.BidWinnerMatePositionId, nr.GameRoundsId});
-
-            modelBuilder.Entity<GamePlayers>()
-                .HasMany(gp => gp.GRPs)
-                .WithOne(grp => grp.GamePlayer)
-                .HasForeignKey(grp => new {grp.PlayerPosition, grp.Points}); 
+            modelBuilder.Entity<GameRoundPlayers>()
+                .HasOne(gp => gp.GamePlayer)
+                .WithMany(grp => grp.GRPs)
+                .HasForeignKey(grp => grp.GamePlayerId);
             #endregion
+
+            modelBuilder.Entity<GamePlayer>()
+                .HasOne(gr => gr.Teams)
+                .WithMany(g => g.GamePlayers)
+                .HasForeignKey(g => g.GamePlayerId);
+
+            #region DataSeeding
+            modelBuilder.Entity<Games>().HasData(
+                new Games(){Ended=false,GamesId=1,LocationId = 1,Name = "SuperWeebTanks",Started = true,Updated = DateTime.Now});
+            modelBuilder.Entity<GameRounds>().HasData(
+                new GameRounds(){DealerPosition = 1,Ended = false,GameRoundsId = 1,GamesId = 1,RoundNumber = 1,Started = true});
+            modelBuilder.Entity<GameRoundPlayers>().HasData(
+                new GameRoundPlayers() { GamePlayerId = 1, GameRoundPlayerId = 1, GameRoundId = 1,Points = 1});
+            modelBuilder.Entity<GamePlayer>().HasData(
+                new GamePlayer(){GamePlayerId = 1,GamesId=1,PlayerId = 1,PlayerPosition = 1,TeamId = 1});
+            modelBuilder.Entity<Players>().HasData(
+                new Players(){FirstName = "Tristan",LastName = "Moller",PlayerId = 1});
+            modelBuilder.Entity<Team>().HasData(
+                new Team(){Name="TheJedis",Points = 2,TeamId = 1});
+            modelBuilder.Entity<Location>().HasData(
+                new Location(){LocationId = 1,Name="Kælderen"});
+
+            #endregion
+
+
         }
     }
 }

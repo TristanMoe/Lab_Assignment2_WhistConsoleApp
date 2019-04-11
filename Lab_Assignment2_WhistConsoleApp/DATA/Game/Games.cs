@@ -33,6 +33,6 @@ namespace Lab_Assignment2_WhistPointCalculator
         public List<GameRounds> GameRounds { get; set; }
 
         //Navigation Property for Gameplayers
-        public List<GamePlayers> GamePlayers { get; set; }
+        public List<GamePlayer> GamePlayers { get; set; }
     }
 }

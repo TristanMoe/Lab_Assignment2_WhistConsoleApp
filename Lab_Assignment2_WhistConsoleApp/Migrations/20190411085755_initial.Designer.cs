@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Assignment2_WhistConsoleApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190410094931_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20190411085755_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,42 +21,90 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayers", b =>
+            modelBuilder.Entity("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", b =>
                 {
-                    b.Property<int>("GamesId");
-
-                    b.Property<int>("PlayerPosition")
+                    b.Property<int>("TeamId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("PlayerId");
+                    b.Property<string>("Name");
 
                     b.Property<int>("Points");
 
-                    b.HasKey("GamesId", "PlayerPosition");
+                    b.HasKey("TeamId");
 
-                    b.HasAlternateKey("PlayerPosition");
+                    b.ToTable("Team");
+
+                    b.HasData(
+                        new
+                        {
+                            TeamId = 1,
+                            Name = "TheJedis",
+                            Points = 2
+                        });
+                });
+
+            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>
+                {
+                    b.Property<int>("GamePlayerId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GamesId");
+
+                    b.Property<int>("PlayerId");
+
+                    b.Property<int>("PlayerPosition");
+
+                    b.Property<int>("TeamId");
+
+                    b.HasKey("GamePlayerId");
+
+                    b.HasIndex("GamesId");
 
                     b.HasIndex("PlayerId");
 
                     b.ToTable("GamePlayers");
+
+                    b.HasData(
+                        new
+                        {
+                            GamePlayerId = 1,
+                            GamesId = 1,
+                            PlayerId = 1,
+                            PlayerPosition = 1,
+                            TeamId = 1
+                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRoundPlayers", b =>
                 {
-                    b.Property<int>("PlayerPosition");
+                    b.Property<int>("GameRoundPlayerId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GameRoundsId");
+                    b.Property<int>("GamePlayerId");
+
+                    b.Property<int>("GameRoundId");
 
                     b.Property<int>("Points");
 
-                    b.HasKey("PlayerPosition");
+                    b.HasKey("GameRoundPlayerId");
 
-                    b.HasIndex("GameRoundsId");
+                    b.HasIndex("GamePlayerId");
 
-                    b.HasIndex("PlayerPosition", "Points");
+                    b.HasIndex("GameRoundId");
 
                     b.ToTable("GameRoundPlayers");
+
+                    b.HasData(
+                        new
+                        {
+                            GameRoundPlayerId = 1,
+                            GamePlayerId = 1,
+                            GameRoundId = 1,
+                            Points = 1
+                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRounds", b =>
@@ -73,8 +121,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
                     b.Property<int>("RoundNumber");
 
-                    b.Property<int>("RoundTypeId");
-
                     b.Property<bool>("Started");
 
                     b.HasKey("GameRoundsId");
@@ -82,6 +128,17 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasIndex("GamesId");
 
                     b.ToTable("GameRounds");
+
+                    b.HasData(
+                        new
+                        {
+                            GameRoundsId = 1,
+                            DealerPosition = 1,
+                            Ended = false,
+                            GamesId = 1,
+                            RoundNumber = 1,
+                            Started = true
+                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Games", b =>
@@ -103,6 +160,17 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("GamesId");
 
                     b.ToTable("Games");
+
+                    b.HasData(
+                        new
+                        {
+                            GamesId = 1,
+                            Ended = false,
+                            LocationId = 1,
+                            Name = "SuperWeebTanks",
+                            Started = true,
+                            Updated = new DateTime(2019, 4, 11, 10, 57, 54, 236, DateTimeKind.Local).AddTicks(5866)
+                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Location", b =>
@@ -116,6 +184,13 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("LocationId");
 
                     b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            LocationId = 1,
+                            Name = "Kælderen"
+                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Players", b =>
@@ -135,35 +210,23 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("PlayerId");
 
                     b.ToTable("Players");
+
+                    b.HasData(
+                        new
+                        {
+                            PlayerId = 1,
+                            FirstName = "Tristan",
+                            LastName = "Moller"
+                        });
                 });
 
-            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Rounds", b =>
+            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>
                 {
-                    b.Property<int>("GameRoundsId");
+                    b.HasOne("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", "Teams")
+                        .WithMany("GamePlayers")
+                        .HasForeignKey("GamePlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<int>("BidWinnerMatePositionId");
-
-                    b.Property<int>("BidWinnerPositionId");
-
-                    b.Property<int>("Tricks");
-
-                    b.Property<int>("TricksWon");
-
-                    b.Property<string>("Trump");
-
-                    b.HasKey("GameRoundsId");
-
-                    b.HasIndex("BidWinnerMatePositionId", "GameRoundsId")
-                        .IsUnique();
-
-                    b.HasIndex("BidWinnerPositionId", "GameRoundsId")
-                        .IsUnique();
-
-                    b.ToTable("Rounds");
-                });
-
-            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayers", b =>
-                {
                     b.HasOne("Lab_Assignment2_WhistPointCalculator.Games", "Game")
                         .WithMany("GamePlayers")
                         .HasForeignKey("GamesId")
@@ -177,15 +240,15 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRoundPlayers", b =>
                 {
-                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GameRounds", "GameRound")
+                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GamePlayer", "GamePlayer")
                         .WithMany("GRPs")
-                        .HasForeignKey("GameRoundsId")
+                        .HasForeignKey("GamePlayerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GamePlayers", "GamePlayer")
+                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GameRounds", "GameRound")
                         .WithMany("GRPs")
-                        .HasForeignKey("PlayerPosition", "Points")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("GameRoundId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRounds", b =>
@@ -201,24 +264,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasOne("Lab_Assignment2_WhistPointCalculator.Games", "Game")
                         .WithOne("Location")
                         .HasForeignKey("Lab_Assignment2_WhistPointCalculator.Location", "LocationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Rounds", b =>
-                {
-                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GameRounds", "Gameround")
-                        .WithMany("Rounds")
-                        .HasForeignKey("GameRoundsId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GamePlayers", "BidWinnerMateGameplayer")
-                        .WithOne("WinnerMateNormalRound")
-                        .HasForeignKey("Lab_Assignment2_WhistPointCalculator.Rounds", "BidWinnerMatePositionId", "GameRoundsId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Lab_Assignment2_WhistPointCalculator.GamePlayers", "BidWinnerGameplayer")
-                        .WithOne("WinnerNormalRound")
-                        .HasForeignKey("Lab_Assignment2_WhistPointCalculator.Rounds", "BidWinnerPositionId", "GameRoundsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
