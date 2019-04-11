@@ -11,7 +11,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// 1. AddRound
     /// 2. End Game 
     /// </summary>
-    class InGameView
+    public class InGameView
     {
         #region Constructor
 
@@ -28,6 +28,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
         #region Properties
 
+        public event EventHandler EndGameEvent;
         public event EventHandler<GameInformationEventArg> AddRoundEvent;
         public GameInformation GameInformation { get; set; }
         public AddRound AddRound { get; set; }
@@ -41,6 +42,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         protected virtual void OnAddRoundevent(GameInformationEventArg e)
         {
             AddRoundEvent?.Invoke(this, e);
+        }
+
+        protected virtual void OnEndGameevent(EventArgs e)
+        {
+            EndGameEvent?.Invoke(this, e);
         }
 
         private void HandleInGameEvents(object sender, GameInformationEventArg e)
@@ -76,11 +82,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     }
                     if (action.Equals("2"))
                     {
-                        Console.WriteLine("Game ended");
-                        Console.WriteLine("No winner");
-
-                        // Rasing start page event
-
+                        // Raising end game event
+                        OnEndGameevent(new EventArgs());
                         return;
                     }
                     throw new Exception("Must choose options 1 or 2, try again");

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
-    class AddRound
+    public class AddRound
     {
         #region Properties 
 
