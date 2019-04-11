@@ -23,15 +23,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
            EndGameView = endgame;
            WinnerView = wingame;
            EndGameView.GameEndedEvent += HandleGameEndedEvent;
+           WinnerView.WinnerScreenOverEvent += HandleGameEndedEvent;
         }
-
 
         protected virtual void OnFindPreviousGame(EventArgs e)
         {
             EventHandler handler = FindPreviousGame;
             handler?.Invoke(this, e);
         }
-
 
         protected virtual void OnGameHasStarted(EventArgs e)
         {

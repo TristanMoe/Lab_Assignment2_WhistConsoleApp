@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         #region Properties 
 
         public event EventHandler<GameInformationEventArg> RoundAddedEvent;
-        public event EventHandler<GameInformationEventArg> WinnerFoundEvent;
+        public event EventHandler<WinnerInformationEventArgs> WinnerFoundEvent;
         public InGameView InGameView { get; set; }
         public Games Game { get; set; }
         public string Trump { get; set; }
@@ -42,7 +43,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             RoundAddedEvent?.Invoke(this, e);
         }
 
-        protected virtual void OnWinnerFoundEvent(GameInformationEventArg e)
+        protected virtual void OnWinnerFoundEvent(WinnerInformationEventArgs e)
         {
             WinnerFoundEvent?.Invoke(this, e);
         }
@@ -99,9 +100,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     {
                         team.Points += (gameRoundPlayer.Points - 6);
 
-                        // raise winnerfound event, go to winner view
+                        // raise winnerfound event, to go winnerview
                         if (team.Points >= 5)
-                            OnWinnerFoundEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+                            OnWinnerFoundEvent(new WinnerInformationEventArgs { WinnerTeam = team});
+                        return;
                     }
                 }
                 catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
 
@@ -18,7 +19,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             AddRound = addRound;
             _db = db;
-            GamePlayers = new List<GamePlayer>();
             AddRound.WinnerFoundEvent += HandleWinnerFoundEvent;
         }
 
@@ -26,27 +26,31 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
         #region Properties
 
+        public event EventHandler WinnerScreenOverEvent;
         private DataContext _db;
         public AddRound AddRound { get; set; }
-        public Games Game { get; set; }
-        public List<GamePlayer> GamePlayers { get; set; }
+        public Team WinnerTeam { get; set; }
 
         #endregion
 
         #region EventHandlers
 
-        private void HandleWinnerFoundEvent(object sender, GameInformationEventArg e)
+        protected virtual void OnWinnerScreenOverevent(EventArgs e)
+        {
+            WinnerScreenOverEvent?.Invoke(this, e);
+        }
+
+        private void HandleWinnerFoundEvent(object sender, WinnerInformationEventArgs e)
         {
             Console.Clear();
             
             // Check received information
             try
             {
-                if (e.Game == null || e.GamePlayers == null)
-                    throw new ArgumentNullException("No gameinformation received!");
+                if (e.WinnerTeam == null)
+                    throw new ArgumentNullException("No winner team received!");
 
-                Game = e.Game;
-                GamePlayers = e.GamePlayers;
+                WinnerTeam = e.WinnerTeam;
             }
             catch (ArgumentNullException ex)
             {
@@ -54,9 +58,17 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 return;
             }
 
+            Console.WriteLine($"{WinnerTeam} has won the game");
+            foreach (var player in WinnerTeam.GamePlayers)
+            {
+                Console.WriteLine($"Congratulations {player.Player.FirstName} {player.Player.LastName}");
+            }
 
+            Console.ReadLine();
+
+            // Back to startpageview
+            OnWinnerScreenOverevent(new EventArgs());
         }
-
         #endregion
     }
 }
