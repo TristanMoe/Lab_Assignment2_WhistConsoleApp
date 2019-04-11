@@ -102,8 +102,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
                         // raise winnerfound event, to go winnerview
                         if (team.Points >= 5)
-                            OnWinnerFoundEvent(new WinnerInformationEventArgs { WinnerTeam = team});
-                        return;
+                        {
+                            OnWinnerFoundEvent(new WinnerInformationEventArgs {WinnerTeam = team});
+                            return;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -149,7 +151,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     throw new Exception("Cannot add round, gameround not found");
 
                 gameRound.Trump = Trump;
-                gameRound.Started = false;
                 gameRound.Ended = true;
 
                 // Adding new round
