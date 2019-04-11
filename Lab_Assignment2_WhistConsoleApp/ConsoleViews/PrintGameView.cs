@@ -65,7 +65,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.WriteLine($"Players:");
                 foreach (var gameRoundPlayer in gameGameRound.GRPs)
                 {
-                    Console.WriteLine($"{gameRoundPlayer.GamePlayer.Player.FirstName} {gameRoundPlayer.GamePlayer.Player.LastName}: {gameRoundPlayer.Points} pts");
+                    Console.WriteLine($"\t{gameRoundPlayer.GamePlayer.Player.FirstName} {gameRoundPlayer.GamePlayer.Player.LastName}: {gameRoundPlayer.Points} pts");
                 }
                 Console.WriteLine("************************");
             }
