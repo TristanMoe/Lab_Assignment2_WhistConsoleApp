@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistConsoleApp.Repositories;
 using Lab_Assignment2_WhistPointCalculator;
@@ -74,22 +75,35 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         Lastnames[i] = Console.ReadLine();
                         Console.WriteLine();
                     }
-                    
-                    Console.WriteLine("Press Enter To Start Game");
 
-                    var input = Console.ReadKey(true).Key;
+                    while (true)
+                    {
 
-                    if (input == ConsoleKey.Enter)
-                    {
-                        //Create game and get event container 
-                        var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
-                        //Raise event
-                        OnGameCreated(eventArg);
-                        return; 
-                    }
-                    else
-                    {
-                        throw new Exception("You Must Press Enter To Continue");
+                        Console.WriteLine("Press Enter To Start Game");
+
+                        try
+                        {
+                            var input = Console.ReadKey(true).Key;
+
+                            if (input == ConsoleKey.Enter)
+                            {
+                                //Create game and get event container 
+                                var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
+                                //Raise event
+                                OnGameCreated(eventArg);
+                                return;
+                            }
+                            else
+                            {
+                                throw new Exception("You Must Press Enter To Continue");
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
                 catch (Exception e)
