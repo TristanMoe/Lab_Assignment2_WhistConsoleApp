@@ -17,12 +17,11 @@ namespace Lab_Assignment2_WhistConsoleApp
 
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);
-            var InGameView = new InGameView(GameInformationView, null);
+            var InGameView = new InGameView(GameInformationView);
             var AddRoundView = new AddRound(InGameView, db);
-            InGameView.AddRound = AddRoundView;
             var GameIndexView = new GameIndexView(StartGameView, db);
             var printGameView = new PrintGameView(GameIndexView);
-
+            
             StartGameView.StartGame();
 
             Console.ReadKey();

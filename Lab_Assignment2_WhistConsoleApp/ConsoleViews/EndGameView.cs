@@ -38,8 +38,12 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
         private void HandleEndGameEvent(object sender, EventArgs e)
         {
+            Console.Clear();
+
             Console.WriteLine("Game ended");
             Console.WriteLine("No winners");
+
+            Console.ReadLine();
 
             // Raise game ended event, back to startpage
             OnGameEndedevent(new EventArgs());

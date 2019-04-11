@@ -15,13 +15,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         #region Constructor
 
-        public InGameView(GameInformation gameInformation, AddRound addRound)
+        public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
-            AddRound = addRound;
             GamePlayers = new List<GamePlayer>();
             GameInformation.GameCreated += HandleInGameEvents;
-            AddRound.RoundAddedEvent += HandleInGameEvents;
         }
 
         #endregion
@@ -49,7 +47,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             EndGameEvent?.Invoke(this, e);
         }
 
-        private void HandleInGameEvents(object sender, GameInformationEventArg e)
+        public void HandleInGameEvents(object sender, GameInformationEventArg e)
         {
             Console.Clear();
             try

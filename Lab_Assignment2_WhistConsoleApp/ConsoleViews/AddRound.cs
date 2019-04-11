@@ -13,6 +13,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         #region Properties 
 
         public event EventHandler<GameInformationEventArg> RoundAddedEvent;
+        public event EventHandler<GameInformationEventArg> WinnerFoundEvent;
         public InGameView InGameView { get; set; }
         public Games Game { get; set; }
         public string Trump { get; set; }
@@ -29,6 +30,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             _db = db;
             GamePlayers = new List<GamePlayer>();
             InGameView.AddRoundEvent += HandleAddRoundEvent;
+            RoundAddedEvent += InGameView.HandleInGameEvents;
         }
 
         #endregion
@@ -38,6 +40,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         protected virtual void OnRoundAddedEvent(GameInformationEventArg e)
         {
             RoundAddedEvent?.Invoke(this, e);
+        }
+
+        protected virtual void OnWinnerFoundEvent(GameInformationEventArg e)
+        {
+            WinnerFoundEvent?.Invoke(this, e);
         }
 
         private void HandleAddRoundEvent(object sender, GameInformationEventArg e)
@@ -89,7 +96,13 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         throw new Exception("No team found");
 
                     if (gameRoundPlayer.Points > 6)
+                    {
                         team.Points += (gameRoundPlayer.Points - 6);
+
+                        // raise winnerfound event, go to winner view
+                        if (team.Points >= 5)
+                            OnWinnerFoundEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -140,17 +153,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 // Adding new round
                 int nextDealerPosition = (gameRound.DealerPosition + 1) <= 4 ? (gameRound.DealerPosition + 1) : 1;
 
-                int nextRoundNumber = gameRound.RoundNumber + 1;
-                if (nextRoundNumber > 13)
-                {
-                    // Go to winnerscreen
-                }
-
                 _db.GameRounds.Add(new GameRounds
                 {
                     DealerPosition = nextDealerPosition, Ended = false, Started = true,
                     Game = game, GameRoundsId = gameRound.GameRoundsId+1, GamesId = game.GamesId,
-                    GRPs = gameRound.GRPs, RoundNumber = nextRoundNumber, Trump = ""
+                    GRPs = gameRound.GRPs, RoundNumber = gameRound.RoundNumber + 1, Trump = ""
                 });
                 
                 _db.SaveChanges();
