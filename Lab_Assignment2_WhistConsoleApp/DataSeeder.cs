@@ -14,13 +14,13 @@ namespace Lab_Assignment2_WhistConsoleApp
             d.GameRounds.Add(
                 new GameRounds() { DealerPosition = 1, Ended = false, GameRoundsId = 1, GamesId = 1, RoundNumber = 1, Started = true });
             d.GameRoundPlayers.Add(
-                new GameRoundPlayers() { GameRoundPlayerId = 1, GameRoundId = 1, Points = 5 });
+                new GameRoundPlayers() { GamePlayerId = 1, GameRoundId = 1, Points = 5 });
             d.GameRoundPlayers.Add(
-                new GameRoundPlayers() { GameRoundPlayerId = 2, GameRoundId = 1, Points = 3 });
+                new GameRoundPlayers() { GamePlayerId = 2, GameRoundId = 1, Points = 3 });
             d.GameRoundPlayers.Add(
-                new GameRoundPlayers() { GameRoundPlayerId = 3, GameRoundId = 1, Points = 2 });
+                new GameRoundPlayers() { GamePlayerId = 3, GameRoundId = 1, Points = 2 });
             d.GameRoundPlayers.Add(
-                new GameRoundPlayers() { GameRoundPlayerId = 4, GameRoundId = 1, Points = 3 });
+                new GameRoundPlayers() { GamePlayerId = 4, GameRoundId = 1, Points = 3 });
             d.GamePlayers.Add(
                 new GamePlayer() { GamesId = 1, PlayerId = 1, PlayerPosition = 1, TeamId = 1 });
             d.GamePlayers.Add(
