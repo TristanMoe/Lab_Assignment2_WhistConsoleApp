@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistPointCalculator;
 
@@ -8,6 +9,8 @@ namespace Lab_Assignment2_WhistConsoleApp
     {
         public static void SeedData(this DataContext d)
         {
+            if (d.Games.Any())
+                return;
 
             d.Games.Add(
                 new Games() { Ended = false, LocationId = 1, Name = "SuperWeebTanks", Started = true, Updated = DateTime.Now });
