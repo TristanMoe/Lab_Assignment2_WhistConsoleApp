@@ -22,6 +22,7 @@ namespace Lab_Assignment2_WhistPointCalculator
         public DbSet<Games> Games { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<GameRounds> GameRounds { get; set; }
+        public DbSet<Team> Teams { get; set; }
        
         public DbSet<GameRoundPlayers> GameRoundPlayers { get; set; }
         #endregion

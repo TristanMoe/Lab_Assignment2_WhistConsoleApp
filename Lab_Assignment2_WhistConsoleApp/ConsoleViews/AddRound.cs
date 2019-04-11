@@ -12,10 +12,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         #region Properties 
 
+        public event EventHandler<GameInformationEventArg> RoundAddedEvent;
         public InGameView InGameView { get; set; }
         public Games Game { get; set; }
         public string Trump { get; set; }
-        public List<GamePlayers> GamePlayers { get; set; }
+        public List<GamePlayer> GamePlayers { get; set; }
         private DataContext _db;
 
         #endregion
@@ -26,15 +27,20 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             InGameView = inGameView;
             _db = db;
-            GamePlayers = new List<GamePlayers>();
-            // eventhandler
+            GamePlayers = new List<GamePlayer>();
+            InGameView.AddRoundEvent += HandleAddRoundEvent;
         }
 
         #endregion
 
         #region EventHandlers
 
-        private void HandleRoundAddedEvent(object sender, GameInformationEventArg e)
+        protected virtual void OnRoundAddedEvent(GameInformationEventArg e)
+        {
+            RoundAddedEvent?.Invoke(this, e);
+        }
+
+        private void HandleAddRoundEvent(object sender, GameInformationEventArg e)
         {
             Console.Clear();
             // Check received information
@@ -60,6 +66,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.WriteLine($"{player.Player.FirstName} {player.Player.LastName} points:");
                 try
                 {
+                    // Update points for the gameroundplayer
                     string result = Console.ReadLine();
 
                     int points = -1;
@@ -75,6 +82,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         throw new Exception("No gameroundplayer found");
 
                     gameRoundPlayer.Points += points;
+
+                    // Update points for the gameroundplayer's team
+                    var team = _db.Teams.FirstOrDefault(t => t.GamePlayers.Contains(player));
+                    if (team == null)
+                        throw new Exception("No team found");
+
+                    if (gameRoundPlayer.Points > 6)
+                        team.Points += (gameRoundPlayer.Points - 6);
                 }
                 catch (Exception ex)
                 {
@@ -105,14 +120,41 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             // Add game round
             try
             {
+                var game = _db.Games.FirstOrDefault(g => g.GamesId == Game.GamesId);
+                if (game == null)
+                    throw new Exception("Cannot add round, game not found");
 
+                var gameRound = _db.GameRounds
+                    .Include(gr => gr.GRPs)
+                        .ThenInclude(grp => grp.GamePlayer)
+                            .ThenInclude(gp => gp.Player)
+                    .FirstOrDefault(gr => gr.GamesId == game.GamesId);
+
+                if (gameRound == null)
+                    throw new Exception("Cannot add round, gameround not found");
+
+                gameRound.Trump = Trump;
+                gameRound.Started = false;
+                gameRound.Ended = true;
+                
+                // Adding new round
+                _db.GameRounds.Add(new GameRounds
+                {
+                    DealerPosition = gameRound.DealerPosition+1, Ended = false, Started = true,
+                    Game = game, GameRoundsId = gameRound.GameRoundsId+1, GamesId = game.GamesId,
+                    GRPs = gameRound.GRPs, RoundNumber = gameRound.RoundNumber+1, Trump = ""
+                });
+                
+                _db.SaveChanges();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Console.WriteLine(exception);
+                Console.WriteLine(ex);
             }
 
-            // Raise ingame event
+            // Back to InGameView, need to check how many rounds are played
+            Console.WriteLine("Added round successfully");
+            OnRoundAddedEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
         }
 
         #endregion

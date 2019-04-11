@@ -15,32 +15,35 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         #region Constructor
 
-        public InGameView(GameInformation gameInformation)
+        public InGameView(GameInformation gameInformation, AddRound addRound)
         {
             GameInformation = gameInformation;
-            GamePlayers = new List<GamePlayers>();
-            GameInformation.GameCreated += HandleGameCreatedEvent;
+            AddRound = addRound;
+            GamePlayers = new List<GamePlayer>();
+            GameInformation.GameCreated += HandleInGameEvents;
+            AddRound.RoundAddedEvent += HandleInGameEvents;
         }
 
         #endregion
 
         #region Properties
 
-        public event EventHandler<GameInformationEventArg> RoundAddedEvent;
-        public GameInformation GameInformation { get; private set; }
+        public event EventHandler<GameInformationEventArg> AddRoundEvent;
+        public GameInformation GameInformation { get; set; }
+        public AddRound AddRound { get; set; }
         public Games Game { get; set; }
-        public List<GamePlayers> GamePlayers { get; set; }
+        public List<GamePlayer> GamePlayers { get; set; }
 
         #endregion
 
         #region Eventhandlers
 
-        protected virtual void OnRoundAddedEvent(GameInformationEventArg e)
+        protected virtual void OnAddRoundevent(GameInformationEventArg e)
         {
-            RoundAddedEvent?.Invoke(this, e);
+            AddRoundEvent?.Invoke(this, e);
         }
 
-        private void HandleGameCreatedEvent(object sender, GameInformationEventArg e)
+        private void HandleInGameEvents(object sender, GameInformationEventArg e)
         {
             Console.Clear();
             try
@@ -68,7 +71,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (action.Equals("1"))
                     {
                         // Raising round added event
-                        OnRoundAddedEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+                        OnAddRoundevent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
                         return;
                     }
                     if (action.Equals("2"))

@@ -61,7 +61,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             //Create Players 
             var players = new List<Players>();
             //Create GamePlayers
-            var gameplayers = new List<GamePlayers>(); 
+            var gameplayers = new List<GamePlayer>(); 
 
             for (int i = 0; i < firstnames.Length; i++)
             {
@@ -72,7 +72,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 players.Add(player);
 
                 //GamePlayers
-                var gameplayer = new GamePlayers();
+                var gameplayer = new GamePlayer();
                 gameplayer.PlayerId = player.PlayerId;
                 gameplayer.GamesId = game.GamesId;
                 gameplayer.PlayerPosition = i;
