@@ -35,6 +35,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             try
             {
                 var game = Repo.GetGame(input);
+
             }
             catch (DbException ex)
             {

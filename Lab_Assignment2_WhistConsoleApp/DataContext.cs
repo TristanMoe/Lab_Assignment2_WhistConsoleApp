@@ -11,10 +11,18 @@ namespace Lab_Assignment2_WhistPointCalculator
     public class DataContext : DbContext
 
     {
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+            if(optionsBuilder.IsConfigured == false)
+            {
+                optionsBuilder.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+            }
         }
         #region Entity Declaration
         public DbSet<GamePlayer> GamePlayers { get; set; }
