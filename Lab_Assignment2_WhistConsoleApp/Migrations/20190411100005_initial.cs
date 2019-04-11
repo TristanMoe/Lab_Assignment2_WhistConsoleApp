@@ -40,7 +40,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Team",
+                name: "Teams",
                 columns: table => new
                 {
                     TeamId = table.Column<int>(nullable: false)
@@ -50,7 +50,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Team", x => x.TeamId);
+                    table.PrimaryKey("PK_Teams", x => x.TeamId);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,9 +110,9 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 {
                     table.PrimaryKey("PK_GamePlayers", x => x.GamePlayerId);
                     table.ForeignKey(
-                        name: "FK_GamePlayers_Team_GamePlayerId",
+                        name: "FK_GamePlayers_Teams_GamePlayerId",
                         column: x => x.GamePlayerId,
-                        principalTable: "Team",
+                        principalTable: "Teams",
                         principalColumn: "TeamId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -159,22 +159,38 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "GamesId", "Ended", "LocationId", "Name", "Started", "Updated" },
-                values: new object[] { 1, false, 1, "SuperWeebTanks", true, new DateTime(2019, 4, 11, 10, 57, 54, 236, DateTimeKind.Local).AddTicks(5866) });
+                values: new object[] { 1, false, 1, "SuperWeebTanks", true, new DateTime(2019, 4, 11, 12, 0, 4, 755, DateTimeKind.Local).AddTicks(6931) });
 
             migrationBuilder.InsertData(
                 table: "Players",
                 columns: new[] { "PlayerId", "FirstName", "LastName" },
-                values: new object[] { 1, "Tristan", "Moller" });
+                values: new object[,]
+                {
+                    { 1, "Tristan", "Moller" },
+                    { 2, "Martin", "Jespersen" },
+                    { 3, "Marcus", "Gasberg" },
+                    { 4, "Mathias", "Hansen" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Team",
+                table: "Teams",
                 columns: new[] { "TeamId", "Name", "Points" },
-                values: new object[] { 1, "TheJedis", 2 });
+                values: new object[,]
+                {
+                    { 1, "TheJedis", 2 },
+                    { 2, "Memers", 3 }
+                });
 
             migrationBuilder.InsertData(
                 table: "GamePlayers",
                 columns: new[] { "GamePlayerId", "GamesId", "PlayerId", "PlayerPosition", "TeamId" },
-                values: new object[] { 1, 1, 1, 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1, 1, 1, 1 },
+                    { 2, 1, 2, 2, 1 },
+                    { 3, 1, 3, 3, 2 },
+                    { 4, 1, 4, 4, 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "GameRounds",
@@ -189,7 +205,13 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
             migrationBuilder.InsertData(
                 table: "GameRoundPlayers",
                 columns: new[] { "GameRoundPlayerId", "GamePlayerId", "GameRoundId", "Points" },
-                values: new object[] { 1, 1, 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1, 1, 5 },
+                    { 2, 2, 1, 3 },
+                    { 3, 3, 1, 2 },
+                    { 4, 4, 1, 3 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_GamePlayers_GamesId",
@@ -232,7 +254,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 name: "GameRounds");
 
             migrationBuilder.DropTable(
-                name: "Team");
+                name: "Teams");
 
             migrationBuilder.DropTable(
                 name: "Players");

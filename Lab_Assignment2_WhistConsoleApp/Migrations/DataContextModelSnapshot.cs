@@ -31,7 +31,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
                     b.HasKey("TeamId");
 
-                    b.ToTable("Team");
+                    b.ToTable("Teams");
 
                     b.HasData(
                         new
@@ -39,6 +39,12 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                             TeamId = 1,
                             Name = "TheJedis",
                             Points = 2
+                        },
+                        new
+                        {
+                            TeamId = 2,
+                            Name = "Memers",
+                            Points = 3
                         });
                 });
 
@@ -72,6 +78,30 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                             PlayerId = 1,
                             PlayerPosition = 1,
                             TeamId = 1
+                        },
+                        new
+                        {
+                            GamePlayerId = 2,
+                            GamesId = 1,
+                            PlayerId = 2,
+                            PlayerPosition = 2,
+                            TeamId = 1
+                        },
+                        new
+                        {
+                            GamePlayerId = 3,
+                            GamesId = 1,
+                            PlayerId = 3,
+                            PlayerPosition = 3,
+                            TeamId = 2
+                        },
+                        new
+                        {
+                            GamePlayerId = 4,
+                            GamesId = 1,
+                            PlayerId = 4,
+                            PlayerPosition = 4,
+                            TeamId = 2
                         });
                 });
 
@@ -101,7 +131,28 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                             GameRoundPlayerId = 1,
                             GamePlayerId = 1,
                             GameRoundId = 1,
-                            Points = 1
+                            Points = 5
+                        },
+                        new
+                        {
+                            GameRoundPlayerId = 2,
+                            GamePlayerId = 2,
+                            GameRoundId = 1,
+                            Points = 3
+                        },
+                        new
+                        {
+                            GameRoundPlayerId = 3,
+                            GamePlayerId = 3,
+                            GameRoundId = 1,
+                            Points = 2
+                        },
+                        new
+                        {
+                            GameRoundPlayerId = 4,
+                            GamePlayerId = 4,
+                            GameRoundId = 1,
+                            Points = 3
                         });
                 });
 
@@ -167,7 +218,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                             LocationId = 1,
                             Name = "SuperWeebTanks",
                             Started = true,
-                            Updated = new DateTime(2019, 4, 11, 10, 57, 54, 236, DateTimeKind.Local).AddTicks(5866)
+                            Updated = new DateTime(2019, 4, 11, 12, 0, 4, 755, DateTimeKind.Local).AddTicks(6931)
                         });
                 });
 
@@ -215,6 +266,24 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                             PlayerId = 1,
                             FirstName = "Tristan",
                             LastName = "Moller"
+                        },
+                        new
+                        {
+                            PlayerId = 2,
+                            FirstName = "Martin",
+                            LastName = "Jespersen"
+                        },
+                        new
+                        {
+                            PlayerId = 3,
+                            FirstName = "Marcus",
+                            LastName = "Gasberg"
+                        },
+                        new
+                        {
+                            PlayerId = 4,
+                            FirstName = "Mathias",
+                            LastName = "Hansen"
                         });
                 });
 

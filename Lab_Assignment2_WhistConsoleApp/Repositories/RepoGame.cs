@@ -56,7 +56,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             var location = new Location();
             location.Name = locationname; 
             //Attach location to game
-            game.LocationId = location.LocationId; 
+            game.LocationId = location.LocationId;
+            game.Location = location;
             
             //Create Players 
             var players = new List<Players>();

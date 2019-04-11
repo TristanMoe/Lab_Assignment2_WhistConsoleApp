@@ -9,12 +9,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 namespace Lab_Assignment2_WhistPointCalculator
 {
     public class DataContext : DbContext
-
     {
+        public DataContext()
+        {
+            
+        }
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+            if(optionsBuilder.IsConfigured == false)
+            {
+                optionsBuilder.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+            }
         }
         #region Entity Declaration
         public DbSet<GamePlayer> GamePlayers { get; set; }
@@ -23,7 +34,6 @@ namespace Lab_Assignment2_WhistPointCalculator
         public DbSet<Location> Locations { get; set; }
         public DbSet<GameRounds> GameRounds { get; set; }
         public DbSet<Team> Teams { get; set; }
-       
         public DbSet<GameRoundPlayers> GameRoundPlayers { get; set; }
         #endregion
 
@@ -131,20 +141,6 @@ namespace Lab_Assignment2_WhistPointCalculator
                 .HasForeignKey(g => g.GamePlayerId);
 
             #region DataSeeding
-            modelBuilder.Entity<Games>().HasData(
-                new Games(){Ended=false,GamesId=1,LocationId = 1,Name = "SuperWeebTanks",Started = true,Updated = DateTime.Now});
-            modelBuilder.Entity<GameRounds>().HasData(
-                new GameRounds(){DealerPosition = 1,Ended = false,GameRoundsId = 1,GamesId = 1,RoundNumber = 1,Started = true});
-            modelBuilder.Entity<GameRoundPlayers>().HasData(
-                new GameRoundPlayers() { GamePlayerId = 1, GameRoundPlayerId = 1, GameRoundId = 1,Points = 1});
-            modelBuilder.Entity<GamePlayer>().HasData(
-                new GamePlayer(){GamePlayerId = 1,GamesId=1,PlayerId = 1,PlayerPosition = 1,TeamId = 1});
-            modelBuilder.Entity<Players>().HasData(
-                new Players(){FirstName = "Tristan",LastName = "Moller",PlayerId = 1});
-            modelBuilder.Entity<Team>().HasData(
-                new Team(){Name="TheJedis",Points = 2,TeamId = 1});
-            modelBuilder.Entity<Location>().HasData(
-                new Location(){LocationId = 1,Name="Kælderen"});
 
             #endregion
 

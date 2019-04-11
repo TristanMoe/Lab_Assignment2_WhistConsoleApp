@@ -5,11 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Assignment2_WhistConsoleApp
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            var db = new DataContext();
+            var options = new DbContextOptionsBuilder<DataContext>()
+                .UseInMemoryDatabase(databaseName: "Test")
+                .Options;
+            var db = new DataContext(options);
+            db.SeedData();
 
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);
@@ -17,6 +21,7 @@ namespace Lab_Assignment2_WhistConsoleApp
             var AddRoundView = new AddRound(InGameView, db);
             InGameView.AddRound = AddRoundView;
             var GameIndexView = new GameIndexView(StartGameView, db);
+            var printGameView = new PrintGameView(GameIndexView);
 
             StartGameView.StartGame();
 

@@ -69,7 +69,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Thread.Sleep(1);
+                    Thread.Sleep(1000);
                 }
             }
         }
