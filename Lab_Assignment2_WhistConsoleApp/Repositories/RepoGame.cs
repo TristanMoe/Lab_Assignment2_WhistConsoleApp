@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
@@ -46,19 +47,30 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             return game; 
         }
 
-        public GameInformationEventArg RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname)
+        public GameInformationEventArg RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname,string[] teamnames)
         {
             //Create Game
             var game = new Games();
             game.Name = gamename;
-
+            
             //Create Location
             var location = new Location();
             location.Name = locationname; 
-            //Attach location to game
-            game.LocationId = location.LocationId;
-            game.Location = location;
+            //Attach location to gameb
             
+            game.Location = location;
+
+            //Create teams
+            var teams = new List<Team>();
+            for (int i = 0; i < teamnames.Length; i++)
+            {
+                var team=new Team();
+                team.Name = teamnames[i];
+                teams.Add(team);
+               
+            }
+
+
             //Create Players 
             var players = new List<Players>();
             //Create GamePlayers
@@ -70,15 +82,23 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 var player = new Players();
                 player.FirstName = firstnames[i];
                 player.LastName = lastnames[i]; 
-                players.Add(player);
 
+                players.Add(player);
+            
                 //GamePlayers
                 var gameplayer = new GamePlayer();
-                gameplayer.PlayerId = player.PlayerId;
-                gameplayer.GamesId = game.GamesId;
+                gameplayer.Player = player;
+                gameplayer.Game = game;
+                
+                gameplayer.Teams= teams[(i / 2)];
                 gameplayer.PlayerPosition = i;
                 gameplayers.Add(gameplayer);
             }
+
+           
+            
+
+
 
             //Start Game
             game.Updated = DateTime.Now;
@@ -88,7 +108,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             _db.Players.AddRange(players);
             _db.GamePlayers.AddRange(gameplayers);
             _db.Locations.Add(location);
-            _db.Games.Add(game); 
+            _db.Games.Add(game);
+            _db.Teams.AddRange(teams);
 
             _db.SaveChanges(); 
             

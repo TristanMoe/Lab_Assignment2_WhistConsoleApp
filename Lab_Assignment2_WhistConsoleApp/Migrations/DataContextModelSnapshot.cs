@@ -32,20 +32,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("TeamId");
 
                     b.ToTable("Teams");
-
-                    b.HasData(
-                        new
-                        {
-                            TeamId = 1,
-                            Name = "TheJedis",
-                            Points = 2
-                        },
-                        new
-                        {
-                            TeamId = 2,
-                            Name = "Memers",
-                            Points = 3
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>
@@ -69,40 +55,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasIndex("PlayerId");
 
                     b.ToTable("GamePlayers");
-
-                    b.HasData(
-                        new
-                        {
-                            GamePlayerId = 1,
-                            GamesId = 1,
-                            PlayerId = 1,
-                            PlayerPosition = 1,
-                            TeamId = 1
-                        },
-                        new
-                        {
-                            GamePlayerId = 2,
-                            GamesId = 1,
-                            PlayerId = 2,
-                            PlayerPosition = 2,
-                            TeamId = 1
-                        },
-                        new
-                        {
-                            GamePlayerId = 3,
-                            GamesId = 1,
-                            PlayerId = 3,
-                            PlayerPosition = 3,
-                            TeamId = 2
-                        },
-                        new
-                        {
-                            GamePlayerId = 4,
-                            GamesId = 1,
-                            PlayerId = 4,
-                            PlayerPosition = 4,
-                            TeamId = 2
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRoundPlayers", b =>
@@ -124,36 +76,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasIndex("GameRoundId");
 
                     b.ToTable("GameRoundPlayers");
-
-                    b.HasData(
-                        new
-                        {
-                            GameRoundPlayerId = 1,
-                            GamePlayerId = 1,
-                            GameRoundId = 1,
-                            Points = 5
-                        },
-                        new
-                        {
-                            GameRoundPlayerId = 2,
-                            GamePlayerId = 2,
-                            GameRoundId = 1,
-                            Points = 3
-                        },
-                        new
-                        {
-                            GameRoundPlayerId = 3,
-                            GamePlayerId = 3,
-                            GameRoundId = 1,
-                            Points = 2
-                        },
-                        new
-                        {
-                            GameRoundPlayerId = 4,
-                            GamePlayerId = 4,
-                            GameRoundId = 1,
-                            Points = 3
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRounds", b =>
@@ -177,17 +99,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasIndex("GamesId");
 
                     b.ToTable("GameRounds");
-
-                    b.HasData(
-                        new
-                        {
-                            GameRoundsId = 1,
-                            DealerPosition = 1,
-                            Ended = false,
-                            GamesId = 1,
-                            RoundNumber = 1,
-                            Started = true
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Games", b =>
@@ -209,17 +120,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("GamesId");
 
                     b.ToTable("Games");
-
-                    b.HasData(
-                        new
-                        {
-                            GamesId = 1,
-                            Ended = false,
-                            LocationId = 1,
-                            Name = "SuperWeebTanks",
-                            Started = true,
-                            Updated = new DateTime(2019, 4, 11, 12, 0, 4, 755, DateTimeKind.Local).AddTicks(6931)
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Location", b =>
@@ -233,13 +133,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("LocationId");
 
                     b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            LocationId = 1,
-                            Name = "Kælderen"
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Players", b =>
@@ -259,32 +152,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasKey("PlayerId");
 
                     b.ToTable("Players");
-
-                    b.HasData(
-                        new
-                        {
-                            PlayerId = 1,
-                            FirstName = "Tristan",
-                            LastName = "Moller"
-                        },
-                        new
-                        {
-                            PlayerId = 2,
-                            FirstName = "Martin",
-                            LastName = "Jespersen"
-                        },
-                        new
-                        {
-                            PlayerId = 3,
-                            FirstName = "Marcus",
-                            LastName = "Gasberg"
-                        },
-                        new
-                        {
-                            PlayerId = 4,
-                            FirstName = "Mathias",
-                            LastName = "Hansen"
-                        });
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>

@@ -156,63 +156,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Games",
-                columns: new[] { "GamesId", "Ended", "LocationId", "Name", "Started", "Updated" },
-                values: new object[] { 1, false, 1, "SuperWeebTanks", true, new DateTime(2019, 4, 11, 12, 0, 4, 755, DateTimeKind.Local).AddTicks(6931) });
-
-            migrationBuilder.InsertData(
-                table: "Players",
-                columns: new[] { "PlayerId", "FirstName", "LastName" },
-                values: new object[,]
-                {
-                    { 1, "Tristan", "Moller" },
-                    { 2, "Martin", "Jespersen" },
-                    { 3, "Marcus", "Gasberg" },
-                    { 4, "Mathias", "Hansen" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Teams",
-                columns: new[] { "TeamId", "Name", "Points" },
-                values: new object[,]
-                {
-                    { 1, "TheJedis", 2 },
-                    { 2, "Memers", 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "GamePlayers",
-                columns: new[] { "GamePlayerId", "GamesId", "PlayerId", "PlayerPosition", "TeamId" },
-                values: new object[,]
-                {
-                    { 1, 1, 1, 1, 1 },
-                    { 2, 1, 2, 2, 1 },
-                    { 3, 1, 3, 3, 2 },
-                    { 4, 1, 4, 4, 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "GameRounds",
-                columns: new[] { "GameRoundsId", "DealerPosition", "Ended", "GamesId", "RoundNumber", "Started" },
-                values: new object[] { 1, 1, false, 1, 1, true });
-
-            migrationBuilder.InsertData(
-                table: "Locations",
-                columns: new[] { "LocationId", "Name" },
-                values: new object[] { 1, "Kælderen" });
-
-            migrationBuilder.InsertData(
-                table: "GameRoundPlayers",
-                columns: new[] { "GameRoundPlayerId", "GamePlayerId", "GameRoundId", "Points" },
-                values: new object[,]
-                {
-                    { 1, 1, 1, 5 },
-                    { 2, 2, 1, 3 },
-                    { 3, 3, 1, 2 },
-                    { 4, 4, 1, 3 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_GamePlayers_GamesId",
                 table: "GamePlayers",
