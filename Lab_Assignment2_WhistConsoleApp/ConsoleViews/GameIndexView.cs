@@ -8,6 +8,10 @@ using Lab_Assignment2_WhistPointCalculator;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
+    public class GameEventArgs:EventArgs
+    {
+        public Games Game { get; set; }
+    }
     /// <summary>
     /// List of games
     /// </summary>
@@ -15,6 +19,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         private RepoGame Repo { get; set; }
         private StartPageView StartPageView { get; set; }
+        public event EventHandler<GameEventArgs> PrintGameInformation;
         public GameIndexView(StartPageView startPageView, DataContext db)
         {
             Repo = new RepoGame(db);
@@ -35,7 +40,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             try
             {
                 var game = Repo.GetGame(input);
-
+                var eventArgs = new GameEventArgs(){Game = game};
+                PrintGameInformation?.Invoke(this, eventArgs);
             }
             catch (DbException ex)
             {
