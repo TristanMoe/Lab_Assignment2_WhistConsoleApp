@@ -13,7 +13,7 @@ namespace Lab_Assignment2_WhistConsoleApp
                 .UseInMemoryDatabase(databaseName: "Test")
                 .Options;
             var db = new DataContext(options);
-            db.Database.EnsureCreated();
+            db.SeedData();
 
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);
