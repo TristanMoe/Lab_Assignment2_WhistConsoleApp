@@ -18,7 +18,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
-            GamePlayers = new List<GamePlayers>();
+            GamePlayers = new List<GamePlayer>();
             GameInformation.GameCreated += HandleGameCreatedEvent;
         }
 
@@ -29,7 +29,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public event EventHandler<GameInformationEventArg> RoundAddedEvent;
         public GameInformation GameInformation { get; private set; }
         public Games Game { get; set; }
-        public List<GamePlayers> GamePlayers { get; set; }
+        public List<GamePlayer> GamePlayers { get; set; }
 
         #endregion
 

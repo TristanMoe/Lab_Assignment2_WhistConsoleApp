@@ -15,7 +15,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public InGameView InGameView { get; set; }
         public Games Game { get; set; }
         public string Trump { get; set; }
-        public List<GamePlayers> GamePlayers { get; set; }
+        public List<GamePlayer> GamePlayers { get; set; }
         private DataContext _db;
 
         #endregion
@@ -26,7 +26,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             InGameView = inGameView;
             _db = db;
-            GamePlayers = new List<GamePlayers>();
+            GamePlayers = new List<GamePlayer>();
             // eventhandler
         }
 
