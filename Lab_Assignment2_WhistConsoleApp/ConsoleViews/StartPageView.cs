@@ -14,11 +14,15 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         public event EventHandler GameHasStarted;
         public event EventHandler FindPreviousGame;
-
+        public EndGameView EndGameView { get; set; }
+        public WinnerView WinnerView { get; set; }
         
-        public void SubscribeToViews(EndGameView endgame, WinnerView wingame)
+        public StartPageView(EndGameView endgame, WinnerView wingame)
         {
-           //TODO Subscribe to events 
+           //TODO Subscribe to events
+           EndGameView = endgame;
+           WinnerView = wingame;
+           EndGameView.GameEndedEvent += HandleGameEndedEvent;
         }
 
 
@@ -35,11 +39,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             handler?.Invoke(this, e);
         }
 
-        public void HandleEndGameEvent(object sender, EventArgs e)
+        private void HandleGameEndedEvent(object sender, EventArgs e)
         {
             StartGame();
         }
-
 
         public void StartGame()
         {
