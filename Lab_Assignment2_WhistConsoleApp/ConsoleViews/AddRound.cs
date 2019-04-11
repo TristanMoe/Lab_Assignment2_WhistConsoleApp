@@ -136,13 +136,21 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 gameRound.Trump = Trump;
                 gameRound.Started = false;
                 gameRound.Ended = true;
-                
+
                 // Adding new round
+                int nextDealerPosition = (gameRound.DealerPosition + 1) <= 4 ? (gameRound.DealerPosition + 1) : 1;
+
+                int nextRoundNumber = gameRound.RoundNumber + 1;
+                if (nextRoundNumber > 13)
+                {
+                    // Go to winnerscreen
+                }
+
                 _db.GameRounds.Add(new GameRounds
                 {
-                    DealerPosition = gameRound.DealerPosition+1, Ended = false, Started = true,
+                    DealerPosition = nextDealerPosition, Ended = false, Started = true,
                     Game = game, GameRoundsId = gameRound.GameRoundsId+1, GamesId = game.GamesId,
-                    GRPs = gameRound.GRPs, RoundNumber = gameRound.RoundNumber+1, Trump = ""
+                    GRPs = gameRound.GRPs, RoundNumber = nextRoundNumber, Trump = ""
                 });
                 
                 _db.SaveChanges();
@@ -152,7 +160,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.WriteLine(ex);
             }
 
-            // Back to InGameView, need to check how many rounds are played
+            // Back to InGameView
             Console.WriteLine("Added round successfully");
             OnRoundAddedEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
         }
