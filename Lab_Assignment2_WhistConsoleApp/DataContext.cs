@@ -71,7 +71,7 @@ namespace Lab_Assignment2_WhistPointCalculator
                 .HasKey(k => k.TeamId);
 
             #endregion
-            /*modelBuilder.Entity<Players>()
+            modelBuilder.Entity<Players>()
                 .Property(p => p.PlayerId)
                 .ValueGeneratedOnAdd();
 
@@ -98,7 +98,6 @@ namespace Lab_Assignment2_WhistPointCalculator
             modelBuilder.Entity<Team>()
                 .Property(k => k.TeamId)
                 .ValueGeneratedOnAdd();
-*/
             
 
             #region Games & Relations
@@ -169,7 +168,7 @@ namespace Lab_Assignment2_WhistPointCalculator
                 .WithMany(g => g.GamePlayers)
                 .HasForeignKey(g => g.TeamId);
 
-            #region DataSeeding
+            //#region DataSeeding
             //modelBuilder.Entity<Games>().HasData(
             //    new Games() { Ended = false, GamesId = 1, LocationId = 1, Name = "SuperWeebTanks", Started = true, Updated = DateTime.Now });
             //modelBuilder.Entity<GameRounds>().HasData(
@@ -204,8 +203,7 @@ namespace Lab_Assignment2_WhistPointCalculator
             //    new Team() { Name = "Memers", Points = 3, TeamId = 2 });
             //modelBuilder.Entity<Location>().HasData(
             //    new Location() { LocationId = 1, Name = "Kælderen" });
-
-            #endregion
+            //#endregion
 
 
         }
