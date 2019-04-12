@@ -79,10 +79,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         return;
                     }
 
-                    if (input == ConsoleKey.D1)
+                    if (input == ConsoleKey.D2)
                     {
                         // Raising end game event
-                        OnEndGameevent(new EventArgs());
+                        OnEndGameevent(EventArgs.Empty);
                         return;
                     }
 
@@ -93,12 +93,12 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     Console.WriteLine(ex.Message);
                     Console.ReadLine();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    Console.ReadLine();
-                    return;
-                }
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex);
+                //    Console.ReadLine();
+                //    return;
+                //}
             }
         }
         #endregion

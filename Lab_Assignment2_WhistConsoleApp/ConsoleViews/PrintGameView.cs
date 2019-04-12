@@ -56,7 +56,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         private void PrintGame(Games game)
         {
             Console.WriteLine($"{game.Name}:");
-            Console.WriteLine($"Location: {game.Location}");
+            Console.WriteLine($"Location: {game.Location.Name}");
             Console.WriteLine($"Last Updated: {game.Updated}");
             Console.WriteLine("Rounds:");
             foreach (var gameGameRound in game.GameRounds)

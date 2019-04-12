@@ -23,7 +23,9 @@ namespace Lab_Assignment2_WhistConsoleApp
             var InGameView = new InGameView(GameInformationView);
             var AddRoundView = new AddRound(InGameView, repo);
             var GameIndexView = new GameIndexView(StartGameView, db);
+            var EndGameView = new EndGameView(InGameView, StartGameView);
             var printGameView = new PrintGameView(GameIndexView);
+            var WinnerGameView = new WinnerView(AddRoundView, StartGameView);
             
             StartGameView.StartGame();
 

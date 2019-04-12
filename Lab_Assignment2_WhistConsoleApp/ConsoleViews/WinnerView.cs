@@ -53,7 +53,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 return;
             }
 
-            Console.WriteLine($"{WinnerTeam} has won the game");
+            Console.WriteLine($"{WinnerTeam.Name} has won the game");
             foreach (var player in WinnerTeam.GamePlayers)
             {
                 Console.WriteLine($"Congratulations {player.Player.FirstName} {player.Player.LastName}");
