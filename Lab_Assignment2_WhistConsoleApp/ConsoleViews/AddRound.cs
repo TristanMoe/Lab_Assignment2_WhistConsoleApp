@@ -61,13 +61,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
                 Game = e.Game;
                 _repoGame._db.Update(Game);
-                Game.GameRounds.Add(currentRound);
                 currentRound.Game = Game;
-                var lastGame = Game.GameRounds.Last();
-                if(lastGame == null)
-                    throw new NullReferenceException();
-                currentRound.DealerPosition = lastGame.DealerPosition + 1;
-                currentRound.RoundNumber = lastGame.RoundNumber + 1;
+                var lastGame = Game.GameRounds.LastOrDefault();
+                currentRound.DealerPosition = lastGame?.DealerPosition + 1 ?? 1;
+                currentRound.RoundNumber = lastGame?.RoundNumber + 1 ?? 1;
             }
             catch (NullReferenceException ex)
             {
@@ -85,6 +82,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.WriteLine($"{player.Player.FirstName} {player.Player.LastName} points:");
                 try
                 {
+
                     // Update points for the gameroundplayer
                     string result = Console.ReadLine();
 
@@ -93,8 +91,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (!string.IsNullOrEmpty(result))
                         points = int.Parse(result);
 
-                    if ((points > 13) || (points < 0))
-                        throw new InputException("Number of points won must be between 0 and 13");
 
                     //add a gameround player
                     var gameRoundPlayer = new GameRoundPlayers
@@ -155,6 +151,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 currentRound.Trump = Trump;
                 currentRound.Ended = true;
 
+                Game.GameRounds.Add(currentRound);
+                _repoGame._db.GameRounds.Add(currentRound);
                 _repoGame._db.SaveChanges();
             }
             catch (Exception ex)

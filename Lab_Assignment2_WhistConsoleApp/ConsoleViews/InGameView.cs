@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Threading;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -59,6 +60,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine(ex);
+                Console.ReadLine();
                 return;
             }
 
@@ -76,17 +78,26 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         OnAddRoundevent(new GameInformationEventArg {Game = Game});
                         return;
                     }
+
                     if (input == ConsoleKey.D1)
                     {
                         // Raising end game event
                         OnEndGameevent(new EventArgs());
                         return;
                     }
+
                     throw new InputException("Must choose options 1 or 2, try again");
                 }
                 catch (InputException ex)
                 {
+                    Console.WriteLine(ex.Message);
+                    Console.ReadLine();
+                }
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex);
+                    Console.ReadLine();
+                    return;
                 }
             }
         }

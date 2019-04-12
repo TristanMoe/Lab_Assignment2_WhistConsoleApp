@@ -110,19 +110,16 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             game.Updated = DateTime.Now;
             game.Ended = false;
             game.Started = true;
-           /* foreach (var gameplayer in gameplayers)
+            game.GamePlayers = new List<GamePlayer>();
+            game.GameRounds = new List<GameRounds>();
+            foreach (var gameplayer in gameplayers)
             {
                 _db.GamePlayers.Add(gameplayer);
             }
-           
-            
-            _db.Players.AddRange(players);
-
             _db.Teams.AddRange(teams);
-            _db.Locations.Add(location);*/
+            _db.Locations.Add(location);
+            _db.Players.AddRange(players);
             _db.Games.Add(game);
-           
-
             _db.SaveChanges();
            
 

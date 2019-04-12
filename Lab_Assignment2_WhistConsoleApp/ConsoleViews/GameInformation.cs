@@ -66,28 +66,30 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.Write("Please Enter Location: ");
                 Location = Console.ReadLine();
 
-                    Console.WriteLine("Please Enter Team Name and the two player on team:");
-                    for (int i = 0; i < 4; i++)
+                Console.WriteLine("Please Enter Team Name and the two player on team:");
+                for (int i = 0; i < 4; i++)
+                {
+                    if (i % 2 == 0)
                     {
-                        if (i % 2 == 0)
-                        {
-                            int teamnr = (i / 2);                       
-                            Console.WriteLine($"Enter Team Name:{teamnr+1}");
-                            TeamNames[teamnr] = Console.ReadLine();
-                            Console.WriteLine("");
+                        int teamnr = (i / 2);                       
+                        Console.WriteLine($"Enter Team Name:{teamnr+1}");
+                        TeamNames[teamnr] = Console.ReadLine();
+                        Console.WriteLine("");
 
-                        }
-
-                        Console.WriteLine($"Player {i+1}: ");
-                        Console.Write("Firstname: ");
-                        Firstnames[i] = Console.ReadLine();
-                        Console.Write("Lastname: ");
-                        Lastnames[i] = Console.ReadLine();
-                        Console.WriteLine();
                     }
-                    
-                    Console.WriteLine("Press Enter To Start Game");
 
+                    Console.WriteLine($"Player {i+1}: ");
+                    Console.Write("Firstname: ");
+                    Firstnames[i] = Console.ReadLine();
+                    Console.Write("Lastname: ");
+                    Lastnames[i] = Console.ReadLine();
+                    Console.WriteLine();
+                }
+                
+                Console.WriteLine("Press Enter To Start Game");
+
+                while (true)
+                {
                     try
                     {
                         var input = Console.ReadKey(true).Key;
@@ -95,7 +97,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         if (input == ConsoleKey.Enter)
                         {
                             //Create game and get event container 
-                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location,TeamNames);
+                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location, TeamNames);
                             //Raise event
                             OnGameCreated(eventArg);
                         }
@@ -107,9 +109,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     }
                     catch (InputException e)
                     {
-                        Console.WriteLine(e);
+                        Console.WriteLine(e.Message);
                         Thread.Sleep(1000);
                     }
+                }
                 
             }
         }

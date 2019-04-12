@@ -11,11 +11,10 @@ namespace Lab_Assignment2_WhistConsoleApp
         static void Main(string[] args)
         {
             var options = new DbContextOptionsBuilder<DataContext>()
-                .UseInMemoryDatabase(databaseName: "Test")
                 .EnableSensitiveDataLogging()
                 .Options;
             var db = new DataContext();
-            //db.SeedData();
+            db.SeedData();
             var repo = new RepoGame(db);
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);

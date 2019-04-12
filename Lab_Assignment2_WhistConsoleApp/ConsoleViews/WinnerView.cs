@@ -49,6 +49,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine(ex);
+                Console.ReadLine();
                 return;
             }
 
