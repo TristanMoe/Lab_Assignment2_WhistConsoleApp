@@ -14,13 +14,12 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         public event EventHandler GameHasStarted;
         public event EventHandler FindPreviousGame;
-
+        public EndGameView EndGameView { get; set; }
+        public WinnerView WinnerView { get; set; }
         
-        public void SubscribeToViews(EndGameView endgame, WinnerView wingame)
+        public StartPageView()
         {
-           //TODO Subscribe to events 
         }
-
 
         protected virtual void OnFindPreviousGame(EventArgs e)
         {
@@ -28,18 +27,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             handler?.Invoke(this, e);
         }
 
-
         protected virtual void OnGameHasStarted(EventArgs e)
         {
             EventHandler handler = GameHasStarted;
             handler?.Invoke(this, e);
         }
-
-        public void HandleEndGameEvent(object sender, EventArgs e)
-        {
-            StartGame();
-        }
-
 
         public void StartGame()
         {
@@ -63,13 +55,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         case ConsoleKey.D2:
                             OnFindPreviousGame(EventArgs.Empty);
                             return; 
-                        default: throw new Exception("Invalid Input!");
+                        default:
+                            throw new InputException("Invalid Input!");
                     }
                 }
-                catch (Exception e)
+                catch (InputException e)
                 {
                     Console.WriteLine(e.Message);
-                    Thread.Sleep(1);
+                    Thread.Sleep(1000);
                 }
             }
         }

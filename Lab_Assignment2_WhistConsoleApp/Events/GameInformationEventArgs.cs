@@ -8,6 +8,5 @@ namespace Lab_Assignment2_WhistConsoleApp.Events
     public class GameInformationEventArg : EventArgs
     {
         public Games Game { get; set; }
-        public List<GamePlayer> GamePlayers { get; set; }
     }
 }

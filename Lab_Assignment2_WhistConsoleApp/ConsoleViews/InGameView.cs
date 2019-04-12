@@ -18,38 +18,42 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
-            GamePlayers = new List<GamePlayer>();
-            GameInformation.GameCreated += HandleGameCreatedEvent;
+            GameInformation.GameCreated += HandleInGameEvents;
         }
 
         #endregion
 
         #region Properties
 
-        public event EventHandler<GameInformationEventArg> RoundAddedEvent;
-        public GameInformation GameInformation { get; private set; }
+        public event EventHandler EndGameEvent;
+        public event EventHandler<GameInformationEventArg> AddRoundEvent;
+        public GameInformation GameInformation { get; set; }
+        public AddRound AddRound { get; set; }
         public Games Game { get; set; }
-        public List<GamePlayer> GamePlayers { get; set; }
 
         #endregion
 
         #region Eventhandlers
 
-        protected virtual void OnRoundAddedEvent(GameInformationEventArg e)
+        protected virtual void OnAddRoundevent(GameInformationEventArg e)
         {
-            RoundAddedEvent?.Invoke(this, e);
+            AddRoundEvent?.Invoke(this, e);
         }
 
-        private void HandleGameCreatedEvent(object sender, GameInformationEventArg e)
+        protected virtual void OnEndGameevent(EventArgs e)
+        {
+            EndGameEvent?.Invoke(this, e);
+        }
+
+        public void HandleInGameEvents(object sender, GameInformationEventArg e)
         {
             Console.Clear();
             try
             {
-                if (e.Game == null || e.GamePlayers == null)
+                if (e.Game == null)
                     throw new ArgumentNullException("No gameinformation received!");
 
                 Game = e.Game;
-                GamePlayers = e.GamePlayers;
             }
             catch (ArgumentNullException ex)
             {
@@ -68,21 +72,18 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (action.Equals("1"))
                     {
                         // Raising round added event
-                        OnRoundAddedEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+                        OnAddRoundevent(new GameInformationEventArg {Game = Game});
                         return;
                     }
                     if (action.Equals("2"))
                     {
-                        Console.WriteLine("Game ended");
-                        Console.WriteLine("No winner");
-
-                        // Rasing start page event
-
+                        // Raising end game event
+                        OnEndGameevent(new EventArgs());
                         return;
                     }
-                    throw new Exception("Must choose options 1 or 2, try again");
+                    throw new InputException("Must choose options 1 or 2, try again");
                 }
-                catch (Exception ex)
+                catch (InputException ex)
                 {
                     Console.WriteLine(ex);
                 }

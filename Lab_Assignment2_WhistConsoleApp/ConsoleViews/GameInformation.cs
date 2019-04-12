@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistConsoleApp.Repositories;
 using Lab_Assignment2_WhistPointCalculator;
@@ -57,15 +58,13 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             while (true)
             {
-                try
-                {
-                    Console.Clear();
+                Console.Clear();
 
-                    Console.Write("Please Enter Your Game Name: ");
-                    Gamename = Console.ReadLine();
+                Console.Write("Please Enter Your Game Name: ");
+                Gamename = Console.ReadLine();
 
-                    Console.Write("Please Enter Location: ");
-                    Location = Console.ReadLine();
+                Console.Write("Please Enter Location: ");
+                Location = Console.ReadLine();
 
                     Console.WriteLine("Please Enter Team Name and the two player on team:");
                     for (int i = 0; i < 4; i++)
@@ -89,29 +88,30 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     
                     Console.WriteLine("Press Enter To Start Game");
 
-                    var input = Console.ReadKey(true).Key;
+                    try
+                    {
+                        var input = Console.ReadKey(true).Key;
 
-                    if (input == ConsoleKey.Enter)
-                    {
-                        //Create game and get event container 
-                        var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location,TeamNames);
-                        //Raise event
-                        OnGameCreated(eventArg);
-                        return; 
+                        if (input == ConsoleKey.Enter)
+                        {
+                            //Create game and get event container 
+                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
+                            //Raise event
+                            OnGameCreated(eventArg);
+                        }
+                        else
+                        {
+                            throw new InputException("You Must Press Enter To Continue");
+                        }
+
                     }
-                    else
+                    catch (InputException e)
                     {
-                        throw new Exception("You Must Press Enter To Continue");
+                        Console.WriteLine(e);
+                        Thread.Sleep(1000);
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return; 
-                }
-
             }
-
         }
     }
 }

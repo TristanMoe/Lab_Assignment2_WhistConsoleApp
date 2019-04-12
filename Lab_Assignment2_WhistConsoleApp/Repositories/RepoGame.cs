@@ -7,6 +7,7 @@ using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Lab_Assignment2_WhistConsoleApp.Repositories
 {
@@ -89,9 +90,14 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 var gameplayer = new GamePlayer();
                 gameplayer.Player = player;
                 gameplayer.Game = game;
+                gameplayer.PlayerPosition = i + 1;
+                gameplayer.GRPs = new List<GameRoundPlayers>();
+
+                player.GamePlayers.Add(gameplayer);
+                gameplayer.Teams = teams[(i / 2)];
                 
-                gameplayer.Teams= teams[(i / 2)];
-                gameplayer.PlayerPosition = i;
+
+                players.Add(player);
                 gameplayers.Add(gameplayer);
             }
 
@@ -101,6 +107,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
 
 
             //Start Game
+            game.Location = location;
             game.Updated = DateTime.Now;
             game.Ended = false;
             game.Started = true;
@@ -123,10 +130,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             //Create EventArg
             var eventArg = new GameInformationEventArg();
             eventArg.Game = game;
-            eventArg.GamePlayers = gameplayers;
 
             return eventArg; 
         }
-            
     }
 }

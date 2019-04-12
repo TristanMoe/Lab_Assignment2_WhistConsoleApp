@@ -17,17 +17,19 @@ namespace Lab_Assignment2_WhistPointCalculator
         [Range(1,9)]
         public int RoundNumber { get; set; }
 
+        public string Trump { get; set; }
+
         //Which players turn it is to deal?
         [Range(1,4)]
         public int DealerPosition { get; set; }
         public bool Ended { get; set; }
         public bool Started { get; set; }
-
+        
         //Foreign key for Games
         public long GamesId { get; set; }
         //Navigation Property for Games
         public Games Game { get; set; }
-        
+       
         //Navigation Property for GameRoundPlayer
         public List<GameRoundPlayers> GRPs { get; set; }
 
