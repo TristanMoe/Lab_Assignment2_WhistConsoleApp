@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Assignment2_WhistConsoleApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190412115441_initials")]
+    [Migration("20190412131922_initials")]
     partial class initials
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,6 +97,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.Property<int>("RoundNumber");
 
                     b.Property<bool>("Started");
+
+                    b.Property<string>("Trump");
 
                     b.HasKey("GameRoundsId");
 

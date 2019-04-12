@@ -96,6 +96,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
                     b.Property<bool>("Started");
 
+                    b.Property<string>("Trump");
+
                     b.HasKey("GameRoundsId");
 
                     b.HasIndex("GamesId");

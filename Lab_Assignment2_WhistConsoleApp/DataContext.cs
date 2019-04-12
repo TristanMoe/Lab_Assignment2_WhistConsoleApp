@@ -24,7 +24,7 @@ namespace Lab_Assignment2_WhistPointCalculator
             if(optionsBuilder.IsConfigured == false)
             {
                 optionsBuilder.UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+                    @"Server=(localdb)\mssqllocaldb;Database=WhistDatabase;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
         #region Entity Declaration
@@ -71,7 +71,7 @@ namespace Lab_Assignment2_WhistPointCalculator
                 .HasKey(k => k.TeamId);
 
             #endregion
-            modelBuilder.Entity<Players>()
+            /*modelBuilder.Entity<Players>()
                 .Property(p => p.PlayerId)
                 .ValueGeneratedOnAdd();
 
@@ -86,11 +86,11 @@ namespace Lab_Assignment2_WhistPointCalculator
                 .Property(p => p.LocationId)
                 .ValueGeneratedOnAdd();
 
-            /*
+            
             modelBuilder.Entity<GamePlayer>()
                 .Property(k => k.GamePlayerId)
                 .ValueGeneratedOnAdd();
-                */
+                
             modelBuilder.Entity<GameRoundPlayers>()
                 .Property(k => k.GameRoundPlayerId)
                 .ValueGeneratedOnAdd();
@@ -98,7 +98,7 @@ namespace Lab_Assignment2_WhistPointCalculator
             modelBuilder.Entity<Team>()
                 .Property(k => k.TeamId)
                 .ValueGeneratedOnAdd();
-
+*/
             
 
             #region Games & Relations

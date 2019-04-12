@@ -113,6 +113,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     GameRoundsId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RoundNumber = table.Column<int>(nullable: false),
+                    Trump = table.Column<string>(nullable: true),
                     DealerPosition = table.Column<int>(nullable: false),
                     Ended = table.Column<bool>(nullable: false),
                     Started = table.Column<bool>(nullable: false),

@@ -14,8 +14,8 @@ namespace Lab_Assignment2_WhistConsoleApp
                 .UseInMemoryDatabase(databaseName: "Test")
                 .EnableSensitiveDataLogging()
                 .Options;
-            var db = new DataContext(options);
-            db.SeedData();
+            var db = new DataContext();
+            //db.SeedData();
             var repo = new RepoGame(db);
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);

@@ -93,7 +93,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 gameplayer.PlayerPosition = i + 1;
                 gameplayer.GRPs = new List<GameRoundPlayers>();
 
-                player.GamePlayers.Add(gameplayer);
+ 
                 gameplayer.Teams = teams[(i / 2)];
                 
 
@@ -101,28 +101,28 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 gameplayers.Add(gameplayer);
             }
 
-           
-            
 
 
+
+            game.GamePlayers = gameplayers;
 
             //Start Game
             game.Location = location;
             game.Updated = DateTime.Now;
             game.Ended = false;
             game.Started = true;
-            foreach (var gameplayer in gameplayers)
+           /* foreach (var gameplayer in gameplayers)
             {
                 _db.GamePlayers.Add(gameplayer);
             }
            
             
             _db.Players.AddRange(players);
-            
-            
-            _db.Locations.Add(location);
-            _db.Games.Add(game);
+
             _db.Teams.AddRange(teams);
+            _db.Locations.Add(location);*/
+            _db.Games.Add(game);
+           
 
             _db.SaveChanges();
            
