@@ -104,15 +104,22 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             game.Updated = DateTime.Now;
             game.Ended = false;
             game.Started = true;
-
+            foreach (var gameplayer in gameplayers)
+            {
+                _db.GamePlayers.Add(gameplayer);
+            }
+           
+            
             _db.Players.AddRange(players);
-            _db.GamePlayers.AddRange(gameplayers);
+            
+            
             _db.Locations.Add(location);
             _db.Games.Add(game);
             _db.Teams.AddRange(teams);
 
-            _db.SaveChanges(); 
-            
+            _db.SaveChanges();
+           
+
             //Create EventArg
             var eventArg = new GameInformationEventArg();
             eventArg.Game = game;

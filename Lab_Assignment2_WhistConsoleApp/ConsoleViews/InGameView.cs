@@ -11,7 +11,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// 1. AddRound
     /// 2. End Game 
     /// </summary>
-    class InGameView
+    public class InGameView
     {
         #region Constructor
 

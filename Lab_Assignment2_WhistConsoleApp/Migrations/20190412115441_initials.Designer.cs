@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Assignment2_WhistConsoleApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190411120352_initial")]
-    partial class initial
+    [Migration("20190412115441_initials")]
+    partial class initials
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", b =>
                 {
-                    b.Property<int>("TeamId")
+                    b.Property<long>("TeamId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -38,17 +38,17 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>
                 {
-                    b.Property<int>("GamePlayerId")
+                    b.Property<long>("GamePlayerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GamesId");
+                    b.Property<long>("GamesId");
 
-                    b.Property<int>("PlayerId");
+                    b.Property<long>("PlayerId");
 
                     b.Property<int>("PlayerPosition");
 
-                    b.Property<int>("TeamId");
+                    b.Property<long>("TeamId");
 
                     b.HasKey("GamePlayerId");
 
@@ -56,18 +56,20 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
                     b.HasIndex("PlayerId");
 
+                    b.HasIndex("TeamId");
+
                     b.ToTable("GamePlayers");
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRoundPlayers", b =>
                 {
-                    b.Property<int>("GameRoundPlayerId")
+                    b.Property<long>("GameRoundPlayerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GamePlayerId");
+                    b.Property<long>("GamePlayerId");
 
-                    b.Property<int>("GameRoundId");
+                    b.Property<long>("GameRoundId");
 
                     b.Property<int>("Points");
 
@@ -82,7 +84,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRounds", b =>
                 {
-                    b.Property<int>("GameRoundsId")
+                    b.Property<long>("GameRoundsId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -90,7 +92,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
                     b.Property<bool>("Ended");
 
-                    b.Property<int>("GamesId");
+                    b.Property<long>("GamesId");
 
                     b.Property<int>("RoundNumber");
 
@@ -105,13 +107,13 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Games", b =>
                 {
-                    b.Property<int>("GamesId")
+                    b.Property<long>("GamesId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Ended");
 
-                    b.Property<int>("LocationId");
+                    b.Property<long>("LocationId");
 
                     b.Property<string>("Name");
 
@@ -121,12 +123,15 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
                     b.HasKey("GamesId");
 
+                    b.HasIndex("LocationId")
+                        .IsUnique();
+
                     b.ToTable("Games");
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Location", b =>
                 {
-                    b.Property<int>("LocationId")
+                    b.Property<long>("LocationId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -139,7 +144,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Players", b =>
                 {
-                    b.Property<int>("PlayerId")
+                    b.Property<long>("PlayerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -158,11 +163,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>
                 {
-                    b.HasOne("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", "Teams")
-                        .WithMany("GamePlayers")
-                        .HasForeignKey("GamePlayerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Lab_Assignment2_WhistPointCalculator.Games", "Game")
                         .WithMany("GamePlayers")
                         .HasForeignKey("GamesId")
@@ -171,6 +171,11 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasOne("Lab_Assignment2_WhistPointCalculator.Players", "Player")
                         .WithMany("GamePlayers")
                         .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", "Teams")
+                        .WithMany("GamePlayers")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -195,11 +200,11 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Location", b =>
+            modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.Games", b =>
                 {
-                    b.HasOne("Lab_Assignment2_WhistPointCalculator.Games", "Game")
-                        .WithOne("Location")
-                        .HasForeignKey("Lab_Assignment2_WhistPointCalculator.Location", "LocationId")
+                    b.HasOne("Lab_Assignment2_WhistPointCalculator.Location", "Location")
+                        .WithOne("Game")
+                        .HasForeignKey("Lab_Assignment2_WhistPointCalculator.Games", "LocationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

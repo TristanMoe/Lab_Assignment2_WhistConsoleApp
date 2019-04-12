@@ -11,9 +11,9 @@ namespace Lab_Assignment2_WhistConsoleApp
         {
             var options = new DbContextOptionsBuilder<DataContext>()
                 .UseInMemoryDatabase(databaseName: "Test")
+                .EnableSensitiveDataLogging()
                 .Options;
             var db = new DataContext(options);
-            db.Database.EnsureCreated();
 
             var StartGameView = new StartPageView(); 
             var GameInformationView = new GameInformation(StartGameView, db);
