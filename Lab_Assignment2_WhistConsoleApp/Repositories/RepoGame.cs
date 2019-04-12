@@ -6,6 +6,7 @@ using System.Text;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Lab_Assignment2_WhistConsoleApp.Repositories
 {
@@ -55,9 +56,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             //Create Location
             var location = new Location();
             location.Name = locationname; 
-            //Attach location to game
-            game.LocationId = location.LocationId;
-            game.Location = location;
             
             //Create Players 
             var players = new List<Players>();
@@ -69,21 +67,29 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 //Players
                 var player = new Players();
                 player.FirstName = firstnames[i];
-                player.LastName = lastnames[i]; 
-                players.Add(player);
+                player.LastName = lastnames[i];
+                player.GamePlayers = new List<GamePlayer>();
 
                 //GamePlayers
                 var gameplayer = new GamePlayer();
-                gameplayer.PlayerId = player.PlayerId;
-                gameplayer.GamesId = game.GamesId;
-                gameplayer.PlayerPosition = i;
+                gameplayer.Player = player;
+                gameplayer.Game = game;
+                gameplayer.PlayerPosition = i + 1;
+                gameplayer.GRPs = new List<GameRoundPlayers>();
+
+                player.GamePlayers.Add(gameplayer);
+
+                players.Add(player);
                 gameplayers.Add(gameplayer);
             }
 
             //Start Game
+            game.Location = location;
             game.Updated = DateTime.Now;
             game.Ended = false;
             game.Started = true;
+            game.GamePlayers = gameplayers;
+            game.GameRounds = new List<GameRounds>();
 
             _db.Players.AddRange(players);
             _db.GamePlayers.AddRange(gameplayers);
@@ -95,10 +101,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             //Create EventArg
             var eventArg = new GameInformationEventArg();
             eventArg.Game = game;
-            eventArg.GamePlayers = gameplayers;
 
             return eventArg; 
         }
-            
     }
 }

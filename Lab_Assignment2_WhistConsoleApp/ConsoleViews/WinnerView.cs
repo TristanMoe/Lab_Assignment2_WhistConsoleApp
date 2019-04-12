@@ -13,32 +13,26 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     /// </summary>
     public class WinnerView
     {
+        private readonly StartPageView _startPage;
+
         #region Constructor
 
-        public WinnerView(AddRound addRound, DataContext db)
+        public WinnerView(AddRound addRound, StartPageView startPage)
         {
+            _startPage = startPage;
             AddRound = addRound;
-            _db = db;
             AddRound.WinnerFoundEvent += HandleWinnerFoundEvent;
         }
 
         #endregion
 
         #region Properties
-
-        public event EventHandler WinnerScreenOverEvent;
-        private DataContext _db;
         public AddRound AddRound { get; set; }
         public Team WinnerTeam { get; set; }
 
         #endregion
 
         #region EventHandlers
-
-        protected virtual void OnWinnerScreenOverevent(EventArgs e)
-        {
-            WinnerScreenOverEvent?.Invoke(this, e);
-        }
 
         private void HandleWinnerFoundEvent(object sender, WinnerInformationEventArgs e)
         {
@@ -66,8 +60,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
             Console.ReadLine();
 
-            // Back to startpageview
-            OnWinnerScreenOverevent(new EventArgs());
+            _startPage.StartGame();
         }
         #endregion
     }

@@ -18,7 +18,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
-            GamePlayers = new List<GamePlayer>();
             GameInformation.GameCreated += HandleInGameEvents;
         }
 
@@ -31,7 +30,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public GameInformation GameInformation { get; set; }
         public AddRound AddRound { get; set; }
         public Games Game { get; set; }
-        public List<GamePlayer> GamePlayers { get; set; }
 
         #endregion
 
@@ -52,11 +50,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             Console.Clear();
             try
             {
-                if (e.Game == null || e.GamePlayers == null)
+                if (e.Game == null)
                     throw new ArgumentNullException("No gameinformation received!");
 
                 Game = e.Game;
-                GamePlayers = e.GamePlayers;
             }
             catch (ArgumentNullException ex)
             {
@@ -75,7 +72,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (action.Equals("1"))
                     {
                         // Raising round added event
-                        OnAddRoundevent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+                        OnAddRoundevent(new GameInformationEventArg {Game = Game});
                         return;
                     }
                     if (action.Equals("2"))

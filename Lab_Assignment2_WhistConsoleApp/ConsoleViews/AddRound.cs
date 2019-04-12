@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistConsoleApp.Events;
+using Lab_Assignment2_WhistConsoleApp.Repositories;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,18 +20,16 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public InGameView InGameView { get; set; }
         public Games Game { get; set; }
         public string Trump { get; set; }
-        public List<GamePlayer> GamePlayers { get; set; }
-        private DataContext _db;
+        private RepoGame _repoGame;
 
         #endregion
 
         #region Constructor
 
-        public AddRound(InGameView inGameView, DataContext db)
+        public AddRound(InGameView inGameView, RepoGame repoGame)
         {
             InGameView = inGameView;
-            _db = db;
-            GamePlayers = new List<GamePlayer>();
+            _repoGame = repoGame;
             InGameView.AddRoundEvent += HandleAddRoundEvent;
             RoundAddedEvent += InGameView.HandleInGameEvents;
         }
@@ -53,24 +52,37 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             Console.Clear();
             // Check received information
+
+            var currentRound = new GameRounds();
+            currentRound.GRPs = new List<GameRoundPlayers>();
+            currentRound.Started = true;
             try
             {
-                if (e.Game == null || e.GamePlayers == null)
-                    throw new ArgumentNullException("No gameinformation received!");
+                if (e.Game == null)
+                    throw new NullReferenceException("No gameinformation received!");
 
                 Game = e.Game;
-                GamePlayers = e.GamePlayers;
+                _repoGame._db.Update(Game);
+                Game.GameRounds.Add(currentRound);
+                currentRound.Game = Game;
+                var lastGame = Game.GameRounds.Last();
+                if(lastGame == null)
+                    throw new NullReferenceException();
+                currentRound.DealerPosition = lastGame.DealerPosition + 1;
+                currentRound.RoundNumber = lastGame.RoundNumber + 1;
             }
-            catch (ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
                 Console.WriteLine(ex);
                 return;
             }
 
             // Update points for each player
+            Console.WriteLine($"Round is #{currentRound.RoundNumber}");
+            Console.WriteLine($"Current dealer is {currentRound.DealerPosition}");
             Console.WriteLine("Enter game results:");
 
-            foreach (var player in GamePlayers)
+            foreach (var player in Game.GamePlayers)
             {
                 Console.WriteLine($"{player.Player.FirstName} {player.Player.LastName} points:");
                 try
@@ -86,28 +98,30 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if ((points > 13) || (points < 0))
                         throw new InputException("Number of points won must be between 0 and 13");
 
-                    var gameRoundPlayer = _db.GameRoundPlayers.FirstOrDefault(grp => grp.GamePlayer.PlayerId == player.PlayerId);
-                    if (gameRoundPlayer == null)
-                        throw new Exception("No gameroundplayer found");
-
-                    gameRoundPlayer.Points += points;
+                    //add a gameround player
+                    var gameRoundPlayer = new GameRoundPlayers();
+                    gameRoundPlayer.GamePlayer = player;
+                    gameRoundPlayer.GameRound = currentRound;
+                    gameRoundPlayer.Points = points;
+                    player.GRPs.Add(gameRoundPlayer);
+                    currentRound.GRPs.Add(gameRoundPlayer);
 
                     // Update points for the gameroundplayer's team
-                    var team = _db.Teams.FirstOrDefault(t => t.GamePlayers.Contains(player));
-                    if (team == null)
-                        throw new Exception("No team found");
+                    //var team = gameRoundPlayer.GamePlayer.Teams;
+                    //if (team == null)
+                    //    throw new Exception("No team found");
 
-                    if (gameRoundPlayer.Points > 6)
-                    {
-                        team.Points += (gameRoundPlayer.Points - 6);
+                    //if (gameRoundPlayer.Points > 6)
+                    //{
+                    //    team.Points += (gameRoundPlayer.Points - 6);
 
-                        // raise winnerfound event, to go winnerview
-                        if (team.Points >= 5)
-                        {
-                            OnWinnerFoundEvent(new WinnerInformationEventArgs {WinnerTeam = team});
-                            return;
-                        }
-                    }
+                    //    // raise winnerfound event, to go winnerview
+                    //    if (team.Points >= 5)
+                    //    {
+                    //        OnWinnerFoundEvent(new WinnerInformationEventArgs {WinnerTeam = team});
+                    //        return;
+                    //    }
+                    //}
                 }
                 catch (InputException ex)
                 {
@@ -140,42 +154,20 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             // Add game round
             try
             {
-                var game = _db.Games.FirstOrDefault(g => g.GamesId == Game.GamesId);
-                if (game == null)
-                    throw new Exception("Cannot add round, game not found");
+                currentRound.Trump = Trump;
+                currentRound.Ended = true;
 
-                var gameRound = _db.GameRounds
-                    .Include(gr => gr.GRPs)
-                        .ThenInclude(grp => grp.GamePlayer)
-                            .ThenInclude(gp => gp.Player)
-                    .FirstOrDefault(gr => gr.GamesId == game.GamesId);
-
-                if (gameRound == null)
-                    throw new Exception("Cannot add round, gameround not found");
-
-                gameRound.Trump = Trump;
-                gameRound.Ended = true;
-
-                // Adding new round
-                int nextDealerPosition = (gameRound.DealerPosition + 1) <= 4 ? (gameRound.DealerPosition + 1) : 1;
-
-                _db.GameRounds.Add(new GameRounds
-                {
-                    DealerPosition = nextDealerPosition, Ended = false, Started = true,
-                    Game = game, GameRoundsId = gameRound.GameRoundsId+1, GamesId = game.GamesId,
-                    GRPs = gameRound.GRPs, RoundNumber = gameRound.RoundNumber + 1, Trump = ""
-                });
-                
-                _db.SaveChanges();
+                _repoGame._db.SaveChanges();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                Console.ReadLine();
             }
 
             // Back to InGameView
             Console.WriteLine("Added round successfully");
-            OnRoundAddedEvent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+            OnRoundAddedEvent(new GameInformationEventArg {Game = Game});
         }
 
         #endregion

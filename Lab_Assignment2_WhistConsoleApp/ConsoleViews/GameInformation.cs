@@ -55,65 +55,54 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             while (true)
             {
-                try
+                Console.Clear();
+
+                Console.Write("Please Enter Your Game Name: ");
+                Gamename = Console.ReadLine();
+
+                Console.Write("Please Enter Location: ");
+                Location = Console.ReadLine();
+
+                Console.WriteLine("Please Enter All Four Players Names:");
+                for (int i = 0; i < 4; i++)
                 {
-                    Console.Clear();
-
-                    Console.Write("Please Enter Your Game Name: ");
-                    Gamename = Console.ReadLine();
-
-                    Console.Write("Please Enter Location: ");
-                    Location = Console.ReadLine();
-
-                    Console.WriteLine("Please Enter All Four Players Names:");
-                    for (int i = 0; i < 4; i++)
-                    {
-                        Console.WriteLine($"Player {i+1}: ");
-                        Console.Write("Firstname: ");
-                        Firstnames[i] = Console.ReadLine();
-                        Console.Write("Lastname: ");
-                        Lastnames[i] = Console.ReadLine();
-                        Console.WriteLine();
-                    }
-
-                    while (true)
-                    {
-
-                        Console.WriteLine("Press Enter To Start Game");
-
-                        try
-                        {
-                            var input = Console.ReadKey(true).Key;
-
-                            if (input == ConsoleKey.Enter)
-                            {
-                                //Create game and get event container 
-                                var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
-                                //Raise event
-                                OnGameCreated(eventArg);
-                                return;
-                            }
-                            else
-                            {
-                                throw new InputException("You Must Press Enter To Continue");
-                            }
-
-                        }
-                        catch (InputException e)
-                        {
-                            Console.WriteLine(e);
-                            Thread.Sleep(1000);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return; 
+                    Console.WriteLine($"Player {i + 1}: ");
+                    Console.Write("Firstname: ");
+                    Firstnames[i] = Console.ReadLine();
+                    Console.Write("Lastname: ");
+                    Lastnames[i] = Console.ReadLine();
+                    Console.WriteLine();
                 }
 
+                while (true)
+                {
+
+                    Console.WriteLine("Press Enter To Start Game");
+
+                    try
+                    {
+                        var input = Console.ReadKey(true).Key;
+
+                        if (input == ConsoleKey.Enter)
+                        {
+                            //Create game and get event container 
+                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
+                            //Raise event
+                            OnGameCreated(eventArg);
+                        }
+                        else
+                        {
+                            throw new InputException("You Must Press Enter To Continue");
+                        }
+
+                    }
+                    catch (InputException e)
+                    {
+                        Console.WriteLine(e);
+                        Thread.Sleep(1000);
+                    }
+                }
             }
-
         }
     }
 }
