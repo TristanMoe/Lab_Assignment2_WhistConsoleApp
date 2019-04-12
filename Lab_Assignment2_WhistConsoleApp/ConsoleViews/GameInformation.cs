@@ -95,11 +95,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                             }
                             else
                             {
-                                throw new Exception("You Must Press Enter To Continue");
+                                throw new InputException("You Must Press Enter To Continue");
                             }
 
                         }
-                        catch (Exception e)
+                        catch (InputException e)
                         {
                             Console.WriteLine(e);
                             Thread.Sleep(1000);

@@ -31,52 +31,40 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             while (true)
             {
-            Console.Clear();
+                Console.Clear();
 
-            PrintGames();
-            Console.Write("Please Enter The Name Of A Game You Wish To Inspect: ");
-            var input = Console.ReadLine();
+                PrintGames();
+                Console.Write("Please Enter The Name Of A Game You Wish To Inspect: ");
+                var input = Console.ReadLine();
 
-            try
-            {
-                var game = Repo.GetGame(input);
-                var eventArgs = new GameEventArgs(){Game = game};
-                PrintGameInformation?.Invoke(this, eventArgs);
-            }
-            catch (DbException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Thread.Sleep(1000);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Thread.Sleep(1000);
-            }
+                try
+                {
+                    var game = Repo.GetGame(input);
+                    var eventArgs = new GameEventArgs(){Game = game};
+                    PrintGameInformation?.Invoke(this, eventArgs);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Thread.Sleep(1000);
+                }
             }
         }
 
         public void PrintGames()
         {
-            try
-            {
-                var games = Repo.GetAllGames();
+            var games = Repo.GetAllGames();
 
-                foreach (var game in games)
+            foreach (var game in games)
+            {
+                Console.WriteLine($"GAME: {game.Name}");
+                Console.WriteLine($"Players:");
+
+                foreach (var gameplayer in game.GamePlayers)
                 {
-                    Console.WriteLine($"GAME: {game.Name}");
-                    Console.WriteLine($"Players:");
-
-                    foreach (var gameplayer in game.GamePlayers)
-                    {
-                        Console.WriteLine(
-                            $"Player {gameplayer.PlayerPosition}:{gameplayer.Player.FirstName} {gameplayer.Player.LastName}");
-                    }
+                    Console.WriteLine(
+                        $"Player {gameplayer.PlayerPosition}:{gameplayer.Player.FirstName} {gameplayer.Player.LastName}");
                 }
-            }
-            catch (DbException e)
-            {
-                Console.WriteLine(e.Message);
             }
         }
     }

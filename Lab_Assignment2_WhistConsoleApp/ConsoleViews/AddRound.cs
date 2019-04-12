@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
@@ -83,7 +84,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         points = int.Parse(result);
 
                     if ((points > 13) || (points < 0))
-                        throw new Exception("Number of points won must be between 0 and 13");
+                        throw new InputException("Number of points won must be between 0 and 13");
 
                     var gameRoundPlayer = _db.GameRoundPlayers.FirstOrDefault(grp => grp.GamePlayer.PlayerId == player.PlayerId);
                     if (gameRoundPlayer == null)
@@ -108,9 +109,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (InputException ex)
                 {
                     Console.WriteLine(ex);
+                    Thread.Sleep(1000);
                 }
             }
 
@@ -123,7 +125,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     string trump = "";
                     trump = Console.ReadLine();
                     if (string.IsNullOrEmpty(trump))
-                        throw new Exception("Trump card must be specified");
+                        throw new InputException("Trump card must be specified");
 
                     Trump = trump;
                     break;
@@ -131,6 +133,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    Thread.Sleep(1000);
                 }
             }
 

@@ -84,9 +84,9 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         OnEndGameevent(new EventArgs());
                         return;
                     }
-                    throw new Exception("Must choose options 1 or 2, try again");
+                    throw new InputException("Must choose options 1 or 2, try again");
                 }
-                catch (Exception ex)
+                catch (InputException ex)
                 {
                     Console.WriteLine(ex);
                 }
