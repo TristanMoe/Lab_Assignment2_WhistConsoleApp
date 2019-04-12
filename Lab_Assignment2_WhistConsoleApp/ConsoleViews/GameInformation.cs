@@ -95,7 +95,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         if (input == ConsoleKey.Enter)
                         {
                             //Create game and get event container 
-                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
+                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location,TeamNames);
                             //Raise event
                             OnGameCreated(eventArg);
                         }
@@ -110,8 +110,9 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         Console.WriteLine(e);
                         Thread.Sleep(1000);
                     }
-                }
+                
             }
         }
     }
 }
+
