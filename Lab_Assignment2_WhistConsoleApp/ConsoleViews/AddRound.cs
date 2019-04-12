@@ -53,9 +53,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             Console.Clear();
             // Check received information
 
-            var currentRound = new GameRounds();
-            currentRound.GRPs = new List<GameRoundPlayers>();
-            currentRound.Started = true;
+            var currentRound = new GameRounds {GRPs = new List<GameRoundPlayers>(), Started = true};
             try
             {
                 if (e.Game == null)
@@ -99,10 +97,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         throw new InputException("Number of points won must be between 0 and 13");
 
                     //add a gameround player
-                    var gameRoundPlayer = new GameRoundPlayers();
-                    gameRoundPlayer.GamePlayer = player;
-                    gameRoundPlayer.GameRound = currentRound;
-                    gameRoundPlayer.Points = points;
+                    var gameRoundPlayer = new GameRoundPlayers
+                    {
+                        GamePlayer = player, GameRound = currentRound, Points = points
+                    };
                     player.GRPs.Add(gameRoundPlayer);
                     currentRound.GRPs.Add(gameRoundPlayer);
 

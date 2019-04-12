@@ -51,12 +51,11 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
         public GameInformationEventArg RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname,string[] teamnames)
         {
             //Create Game
-            var game = new Games();
-            game.Name = gamename;
-            
+            var game = new Games {Name = gamename};
+
             //Create Location
-            var location = new Location();
-            location.Name = locationname; 
+            var location = new Location {Name = locationname};
+
             //Attach location to gameb
             
             game.Location = location;
@@ -65,8 +64,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             var teams = new List<Team>();
             for (int i = 0; i < teamnames.Length; i++)
             {
-                var team=new Team();
-                team.Name = teamnames[i];
+                var team = new Team {Name = teamnames[i]};
                 teams.Add(team);
                
             }
@@ -80,22 +78,23 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             for (int i = 0; i < firstnames.Length; i++)
             {
                 //Players
-                var player = new Players();
-                player.FirstName = firstnames[i];
-                player.LastName = lastnames[i]; 
+                var player = new Players {FirstName = firstnames[i], LastName = lastnames[i]};
+
 
                 players.Add(player);
             
                 //GamePlayers
-                var gameplayer = new GamePlayer();
-                gameplayer.Player = player;
-                gameplayer.Game = game;
-                gameplayer.PlayerPosition = i + 1;
-                gameplayer.GRPs = new List<GameRoundPlayers>();
+                var gameplayer = new GamePlayer
+                {
+                    Player = player,
+                    Game = game,
+                    PlayerPosition = i + 1,
+                    GRPs = new List<GameRoundPlayers>(),
+                    Teams = teams[(i / 2)]
+                };
 
- 
-                gameplayer.Teams = teams[(i / 2)];
-                
+
+
 
                 players.Add(player);
                 gameplayers.Add(gameplayer);
@@ -128,8 +127,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
            
 
             //Create EventArg
-            var eventArg = new GameInformationEventArg();
-            eventArg.Game = game;
+            var eventArg = new GameInformationEventArg {Game = game};
 
             return eventArg; 
         }

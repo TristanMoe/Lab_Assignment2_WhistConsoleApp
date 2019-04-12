@@ -17,14 +17,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public EndGameView EndGameView { get; set; }
         public WinnerView WinnerView { get; set; }
 
-        public void SubscribeToEvents(EndGameView endgame, WinnerView wingame)
-        {
-            EndGameView = endgame;
-            WinnerView = wingame;
-            EndGameView.GameEndedEvent += HandleGameEndedEvent;
-            WinnerView.WinnerScreenOverEvent += HandleGameEndedEvent;
-        }
-        
+      
         public StartPageView()
         {
             StartGame();

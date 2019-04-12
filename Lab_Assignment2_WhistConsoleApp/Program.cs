@@ -24,7 +24,7 @@ namespace Lab_Assignment2_WhistConsoleApp
             var GameIndexView = new GameIndexView(StartGameView, db);
             var printGameView = new PrintGameView(GameIndexView);
             
-            startGameView.StartGame();
+            StartGameView.StartGame();
 
             Console.ReadKey();
 
