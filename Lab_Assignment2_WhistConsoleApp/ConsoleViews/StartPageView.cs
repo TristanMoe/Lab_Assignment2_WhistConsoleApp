@@ -20,7 +20,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
       
         public StartPageView()
         {
-            Console.WriteLine("Loading Whist Database...");
             StartGame();
         }
 

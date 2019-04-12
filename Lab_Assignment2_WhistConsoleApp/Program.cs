@@ -10,6 +10,8 @@ namespace Lab_Assignment2_WhistConsoleApp
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Loading Whist Database, Please Wait ...");
+
             var options = new DbContextOptionsBuilder<DataContext>()
                 .EnableSensitiveDataLogging()
                 .Options;
