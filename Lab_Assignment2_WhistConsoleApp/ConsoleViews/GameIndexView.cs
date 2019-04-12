@@ -46,7 +46,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Thread.Sleep(1000);
+                    Console.ReadLine();
+                    return;
                 }
             }
         }
