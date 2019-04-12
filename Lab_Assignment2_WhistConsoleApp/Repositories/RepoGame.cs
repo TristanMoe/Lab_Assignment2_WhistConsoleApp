@@ -49,12 +49,11 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
         public GameInformationEventArg RepoCreateANewGame(string gamename, string[] firstnames, string[] lastnames, string locationname)
         {
             //Create Game
-            var game = new Games();
-            game.Name = gamename;
+            var game = new Games {Name = gamename};
 
             //Create Location
-            var location = new Location();
-            location.Name = locationname; 
+            var location = new Location {Name = locationname};
+
             //Attach location to game
             game.LocationId = location.LocationId;
             game.Location = location;
@@ -67,16 +66,15 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             for (int i = 0; i < firstnames.Length; i++)
             {
                 //Players
-                var player = new Players();
-                player.FirstName = firstnames[i];
-                player.LastName = lastnames[i]; 
+                var player = new Players {FirstName = firstnames[i], LastName = lastnames[i]};
+
                 players.Add(player);
 
                 //GamePlayers
-                var gameplayer = new GamePlayer();
-                gameplayer.PlayerId = player.PlayerId;
-                gameplayer.GamesId = game.GamesId;
-                gameplayer.PlayerPosition = i;
+                var gameplayer = new GamePlayer
+                {
+                    PlayerId = player.PlayerId, GamesId = game.GamesId, PlayerPosition = i
+                };
                 gameplayers.Add(gameplayer);
             }
 
@@ -93,9 +91,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             _db.SaveChanges(); 
             
             //Create EventArg
-            var eventArg = new GameInformationEventArg();
-            eventArg.Game = game;
-            eventArg.GamePlayers = gameplayers;
+            var eventArg = new GameInformationEventArg {Game = game, GamePlayers = gameplayers};
 
             return eventArg; 
         }

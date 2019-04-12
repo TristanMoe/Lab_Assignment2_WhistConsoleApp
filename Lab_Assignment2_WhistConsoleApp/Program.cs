@@ -15,14 +15,19 @@ namespace Lab_Assignment2_WhistConsoleApp
             var db = new DataContext(options);
             db.SeedData();
 
-            var StartGameView = new StartPageView(); 
-            var GameInformationView = new GameInformation(StartGameView, db);
-            var InGameView = new InGameView(GameInformationView);
-            var AddRoundView = new AddRound(InGameView, db);
-            var GameIndexView = new GameIndexView(StartGameView, db);
-            var printGameView = new PrintGameView(GameIndexView);
+            var startGameView = new StartPageView(); 
+            var gameInformationView = new GameInformation(startGameView, db);
+            var inGameView = new InGameView(gameInformationView);
+            var AddRoundView = new AddRound(inGameView, db);
+            var gameIndexView = new GameIndexView(startGameView, db);
+            var printGameView = new PrintGameView(gameIndexView);
+
+            var winGameView = new WinnerView(AddRoundView, db);
+            var endGameView = new EndGameView(inGameView);
+
+            startGameView.SubscribeToEvents(endGameView, winGameView);
             
-            StartGameView.StartGame();
+            startGameView.StartGame();
 
             Console.ReadKey();
 

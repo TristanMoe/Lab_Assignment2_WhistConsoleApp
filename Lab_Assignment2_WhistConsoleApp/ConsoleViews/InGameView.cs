@@ -4,6 +4,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistPointCalculator;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
@@ -71,14 +72,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             {
                 try
                 {
-                    string action = Console.ReadLine();
-                    if (action.Equals("1"))
+                    var input = Console.ReadKey(true).Key;
+                    if (input == ConsoleKey.D1)
                     {
                         // Raising round added event
                         OnAddRoundevent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
                         return;
                     }
-                    if (action.Equals("2"))
+                    if (input == ConsoleKey.D1)
                     {
                         // Raising end game event
                         OnEndGameevent(new EventArgs());
