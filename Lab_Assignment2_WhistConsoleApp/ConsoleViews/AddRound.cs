@@ -64,6 +64,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 currentRound.Game = Game;
                 var lastGame = Game.GameRounds.LastOrDefault();
                 currentRound.DealerPosition = lastGame?.DealerPosition + 1 ?? 1;
+                currentRound.DealerPosition = (currentRound.DealerPosition < 5) ? currentRound.DealerPosition : 1;
                 currentRound.RoundNumber = lastGame?.RoundNumber + 1 ?? 1;
             }
             catch (NullReferenceException ex)
@@ -82,8 +83,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.WriteLine($"{player.Player.FirstName} {player.Player.LastName} points:");
                 try
                 {
-
-                    // Update points for the gameroundplayer
+                    // Update points for the gameplayer
                     string result = Console.ReadLine();
 
                     int points = -1;
@@ -91,6 +91,17 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (!string.IsNullOrEmpty(result))
                         points = int.Parse(result);
 
+                    // update points for gameplayer's team
+                    if (points > 6)
+                    {
+                        player.Teams.Points += (points - 6);
+
+                        if (player.Teams.Points >= 5)
+                        {
+                            OnWinnerFoundEvent(new WinnerInformationEventArgs {WinnerTeam = player.Teams});
+                            return;
+                        }
+                    }
 
                     //add a gameround player
                     var gameRoundPlayer = new GameRoundPlayers
@@ -99,23 +110,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     };
                     player.GRPs.Add(gameRoundPlayer);
                     currentRound.GRPs.Add(gameRoundPlayer);
-
-                    // Update points for the gameroundplayer's team
-                    //var team = gameRoundPlayer.GamePlayer.Teams;
-                    //if (team == null)
-                    //    throw new Exception("No team found");
-
-                    //if (gameRoundPlayer.Points > 6)
-                    //{
-                    //    team.Points += (gameRoundPlayer.Points - 6);
-
-                    //    // raise winnerfound event, to go winnerview
-                    //    if (team.Points >= 5)
-                    //    {
-                    //        OnWinnerFoundEvent(new WinnerInformationEventArgs {WinnerTeam = team});
-                    //        return;
-                    //    }
-                    //}
                 }
                 catch (InputException ex)
                 {
@@ -162,7 +156,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             }
 
             // Back to InGameView
-            Console.WriteLine("Added round successfully");
             OnRoundAddedEvent(new GameInformationEventArg {Game = Game});
         }
 

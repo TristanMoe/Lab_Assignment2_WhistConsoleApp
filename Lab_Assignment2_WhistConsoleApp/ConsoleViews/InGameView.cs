@@ -82,7 +82,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (input == ConsoleKey.D2)
                     {
                         // Raising end game event
-                        OnEndGameevent(new EventArgs());
+                        OnEndGameevent(EventArgs.Empty);
                         return;
                     }
 
