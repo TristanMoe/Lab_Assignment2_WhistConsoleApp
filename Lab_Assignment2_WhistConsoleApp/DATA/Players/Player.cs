@@ -12,8 +12,8 @@ namespace Lab_Assignment2_WhistPointCalculator
         //Attributes
 
         //Primary Key
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PlayerId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long PlayerId { get; set; }
 
         [Required]
         [MaxLength(20)]

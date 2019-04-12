@@ -11,8 +11,8 @@ namespace Lab_Assignment2_WhistPointCalculator
         //Attributes
 
         //Primary Key
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int GameRoundsId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long GameRoundsId { get; set; }
 
         [Range(1,9)]
         public int RoundNumber { get; set; }
@@ -26,7 +26,7 @@ namespace Lab_Assignment2_WhistPointCalculator
         public bool Started { get; set; }
         
         //Foreign key for Games
-        public int GamesId { get; set; }
+        public long GamesId { get; set; }
         //Navigation Property for Games
         public Games Game { get; set; }
        

@@ -41,13 +41,14 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         case ConsoleKey.B:
                             NavigateBack?.Invoke(this,EventArgs.Empty);
                             return;
-                        default: throw new Exception("Invalid Input!");
+                        default:
+                            throw new InputException("Invalid Input!");
                     }
                 }
-                catch (Exception ex)
+                catch (InputException ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Thread.Sleep(1);
+                    Thread.Sleep(1000);
                 }
             }
         }

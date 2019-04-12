@@ -13,8 +13,8 @@ namespace Lab_Assignment2_WhistPointCalculator
         //Attributes
 
         //Primary Key
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int GamesId { get; set; }
+       //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long GamesId { get; set; }
         public string Name { get; set; }
 
         //public string Description { get; set; }
@@ -24,7 +24,7 @@ namespace Lab_Assignment2_WhistPointCalculator
         public DateTime Updated { get; set; }
 
         //Foreign key for location
-        public int LocationId { get; set; }
+        public long LocationId { get; set; }
 
         //Navigation Property for Location
         public Location Location { get; set; }

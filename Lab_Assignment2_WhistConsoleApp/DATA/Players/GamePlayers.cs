@@ -13,16 +13,16 @@ namespace Lab_Assignment2_WhistPointCalculator
         public int PlayerPosition { get; set; }
 
         //Foreign Key to team
-        public int TeamId { get; set; }
+        public long TeamId { get; set; }
 
 
         //Primary key for Player 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int GamePlayerId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long GamePlayerId { get; set; }
 
 
         //Foreign Key for Players
-        public int PlayerId { get; set; }
+        public long PlayerId { get; set; }
 
         //Navigation Property for players
         public Players Player { get; set; }
@@ -32,7 +32,7 @@ namespace Lab_Assignment2_WhistPointCalculator
 
 
         //Foreign Key for Game
-        public int GamesId { get; set; }
+        public long GamesId { get; set; }
 
         //Navigation Property for Games 
         public Games Game { get; set; }

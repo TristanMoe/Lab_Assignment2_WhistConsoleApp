@@ -19,7 +19,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public InGameView(GameInformation gameInformation)
         {
             GameInformation = gameInformation;
-            GamePlayers = new List<GamePlayer>();
             GameInformation.GameCreated += HandleInGameEvents;
         }
 
@@ -32,7 +31,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public GameInformation GameInformation { get; set; }
         public AddRound AddRound { get; set; }
         public Games Game { get; set; }
-        public List<GamePlayer> GamePlayers { get; set; }
 
         #endregion
 
@@ -53,11 +51,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             Console.Clear();
             try
             {
-                if (e.Game == null || e.GamePlayers == null)
+                if (e.Game == null)
                     throw new ArgumentNullException("No gameinformation received!");
 
                 Game = e.Game;
-                GamePlayers = e.GamePlayers;
             }
             catch (ArgumentNullException ex)
             {
@@ -76,7 +73,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (input == ConsoleKey.D1)
                     {
                         // Raising round added event
-                        OnAddRoundevent(new GameInformationEventArg {Game = Game, GamePlayers = GamePlayers});
+                        OnAddRoundevent(new GameInformationEventArg {Game = Game});
                         return;
                     }
                     if (input == ConsoleKey.D1)
@@ -85,9 +82,9 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         OnEndGameevent(new EventArgs());
                         return;
                     }
-                    throw new Exception("Must choose options 1 or 2, try again");
+                    throw new InputException("Must choose options 1 or 2, try again");
                 }
-                catch (Exception ex)
+                catch (InputException ex)
                 {
                     Console.WriteLine(ex);
                 }

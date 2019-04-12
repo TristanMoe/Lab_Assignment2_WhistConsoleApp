@@ -42,11 +42,6 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             handler?.Invoke(this, e);
         }
 
-        private void HandleGameEndedEvent(object sender, EventArgs e)
-        {
-            StartGame();
-        }
-
         public void StartGame()
         {
             while (true)
@@ -69,10 +64,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         case ConsoleKey.D2:
                             OnFindPreviousGame(EventArgs.Empty);
                             return; 
-                        default: throw new Exception("Invalid Input!");
+                        default:
+                            throw new InputException("Invalid Input!");
                     }
                 }
-                catch (Exception e)
+                catch (InputException e)
                 {
                     Console.WriteLine(e.Message);
                     Thread.Sleep(1000);

@@ -8,17 +8,17 @@ namespace Lab_Assignment2_WhistPointCalculator
 {
     public class GameRoundPlayers
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int GameRoundPlayerId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long GameRoundPlayerId { get; set; }
 
         //Foreign Key 
-        public int GamePlayerId { get; set; }
+        public long GamePlayerId { get; set; }
 
 
         public int Points { get; set; }
 
         //Foreign key
-        public int GameRoundId { get; set; }
+        public long GameRoundId { get; set; }
 
         //Navigation property for GameRound 
         public GameRounds GameRound { get; set; }

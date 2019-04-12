@@ -13,28 +13,23 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
     {
         #region Constructor
 
-        public EndGameView(InGameView inGameView)
+        public EndGameView(InGameView inGameView, StartPageView startPage)
         {
             InGameView = inGameView;
             InGameView.EndGameEvent += HandleEndGameEvent;
+            _startPage = startPage;
         }
 
         #endregion
 
         #region properties
-
-        public event EventHandler GameEndedEvent;
         public InGameView InGameView { get; set; }
         private DataContext _db;
+        private StartPageView _startPage;
 
         #endregion
 
         #region EventHandlers
-
-        protected virtual void OnGameEndedevent(EventArgs e)
-        {
-            GameEndedEvent?.Invoke(this, e);
-        }
 
         private void HandleEndGameEvent(object sender, EventArgs e)
         {
@@ -45,8 +40,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
             Console.ReadLine();
 
-            // Raise game ended event, back to startpage
-            OnGameEndedevent(new EventArgs());
+            _startPage.StartGame();
         }
         
         #endregion

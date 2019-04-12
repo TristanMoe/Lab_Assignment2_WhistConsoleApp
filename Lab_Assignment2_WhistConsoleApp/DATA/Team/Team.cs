@@ -10,8 +10,8 @@ namespace Lab_Assignment2_WhistConsoleApp.DATA.Team
     {
         public string Name { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TeamId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long TeamId { get; set; }
         public int Points { get; set; }
 
         //Navigation to GamePlayer

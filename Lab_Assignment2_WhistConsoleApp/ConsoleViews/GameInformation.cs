@@ -27,6 +27,9 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         private string[] Lastnames { get; set; } = new string[4];
         private StartPageView StartPage { get; set; }
         private RepoGame Repo { get; set; }
+
+        private string[] TeamNames { get; set; } = new string[2];
+
         
 
 
@@ -55,19 +58,26 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             while (true)
             {
-                try
-                {
-                    Console.Clear();
+                Console.Clear();
 
-                    Console.Write("Please Enter Your Game Name: ");
-                    Gamename = Console.ReadLine();
+                Console.Write("Please Enter Your Game Name: ");
+                Gamename = Console.ReadLine();
 
-                    Console.Write("Please Enter Location: ");
-                    Location = Console.ReadLine();
+                Console.Write("Please Enter Location: ");
+                Location = Console.ReadLine();
 
-                    Console.WriteLine("Please Enter All Four Players Names:");
+                    Console.WriteLine("Please Enter Team Name and the two player on team:");
                     for (int i = 0; i < 4; i++)
                     {
+                        if (i % 2 == 0)
+                        {
+                            int teamnr = (i / 2);                       
+                            Console.WriteLine($"Enter Team Name:{teamnr+1}");
+                            TeamNames[teamnr] = Console.ReadLine();
+                            Console.WriteLine("");
+
+                        }
+
                         Console.WriteLine($"Player {i+1}: ");
                         Console.Write("Firstname: ");
                         Firstnames[i] = Console.ReadLine();
@@ -75,45 +85,34 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         Lastnames[i] = Console.ReadLine();
                         Console.WriteLine();
                     }
+                    
+                    Console.WriteLine("Press Enter To Start Game");
 
-                    while (true)
+                    try
                     {
+                        var input = Console.ReadKey(true).Key;
 
-                        Console.WriteLine("Press Enter To Start Game");
-
-                        try
+                        if (input == ConsoleKey.Enter)
                         {
-                            var input = Console.ReadKey(true).Key;
-
-                            if (input == ConsoleKey.Enter)
-                            {
-                                //Create game and get event container 
-                                var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location);
-                                //Raise event
-                                OnGameCreated(eventArg);
-                                return;
-                            }
-                            else
-                            {
-                                throw new Exception("You Must Press Enter To Continue");
-                            }
-
+                            //Create game and get event container 
+                            var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location,TeamNames);
+                            //Raise event
+                            OnGameCreated(eventArg);
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Console.WriteLine(e);
-                            Thread.Sleep(1000);
+                            throw new InputException("You Must Press Enter To Continue");
                         }
+
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return; 
-                }
-
+                    catch (InputException e)
+                    {
+                        Console.WriteLine(e);
+                        Thread.Sleep(1000);
+                    }
+                
             }
-
         }
     }
 }
+
