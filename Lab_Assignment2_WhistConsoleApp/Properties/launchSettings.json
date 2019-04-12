@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Lab_Assignment2_WhistConsoleApp": {
-      "commandName": "Project",
-      "workingDirectory": "C:\\Users\\Mathias\\Documents\\Git\\DAB\\Lab_Assignment2_WhistConsoleApp"
+      "commandName": "Project"
     }
   }
 }
