@@ -166,7 +166,15 @@ namespace Lab_Assignment2_WhistPointCalculator
             modelBuilder.Entity<GamePlayer>()
                 .HasOne(gr => gr.Teams)
                 .WithMany(g => g.GamePlayers)
-                .HasForeignKey(g => g.TeamId);
+                .HasForeignKey(g => g.TeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
+
+            modelBuilder.Entity<Team>()
+                .HasOne(t => t.Games)
+                .WithMany(g => g.Teams)
+                .HasForeignKey(g => g.GamesId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //#region DataSeeding
             //modelBuilder.Entity<Games>().HasData(

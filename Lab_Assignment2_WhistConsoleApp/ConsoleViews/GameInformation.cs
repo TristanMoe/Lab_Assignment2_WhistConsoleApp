@@ -100,6 +100,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                             var eventArg = Repo.RepoCreateANewGame(Gamename, Firstnames, Lastnames, Location, TeamNames);
                             //Raise event
                             OnGameCreated(eventArg);
+                            return;
                         }
                         else
                         {

@@ -61,7 +61,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
             Console.ReadLine();
 
-            _startPage.StartGame();
+           // _startPage.StartGame();
         }
         #endregion
     }

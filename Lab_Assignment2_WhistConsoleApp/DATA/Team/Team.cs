@@ -17,7 +17,10 @@ namespace Lab_Assignment2_WhistConsoleApp.DATA.Team
         //Navigation to GamePlayer
         public List<GamePlayer> GamePlayers { get; set; }
 
-      
+        //Foreign key for team
+        public long GamesId { get; set; }
+        //navigation to games
+        public Games Games { get; set; }
         
     }
 }

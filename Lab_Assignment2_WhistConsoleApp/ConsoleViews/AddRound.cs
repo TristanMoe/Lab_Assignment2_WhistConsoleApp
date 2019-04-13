@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using Lab_Assignment2_WhistConsoleApp.DATA.Team;
@@ -21,6 +22,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public Games Game { get; set; }
         public string Trump { get; set; }
         private RepoGame _repoGame;
+        public List<GameRoundPlayers> PlayerGameRoundPlayers { get; set; }=new List<GameRoundPlayers>();
+        public List<GameRoundPlayers> CurrentGameRoundPlayerses { get; set; }=new List<GameRoundPlayers>();
 
         #endregion
 
@@ -83,26 +86,34 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.WriteLine($"{player.Player.FirstName} {player.Player.LastName} points:");
                 try
                 {
-                    // Update points for the gameplayer
-                    string result = Console.ReadLine();
-
-                    int points = -1;
-
-                    if (!string.IsNullOrEmpty(result))
-                        points = int.Parse(result);
-
-                    // update points for gameplayer's team
-                    if (points > 6)
+                    int i = 0;
+                    int points = 0;
+                    while (true)
                     {
-                        player.Teams.Points += (points - 6);
+                        if(i>0)
+                            Console.WriteLine("Point has to be between 0 and 13. Please try again.");
+                        // Update points for the gameplayer
+                        string result = Console.ReadLine();
 
-                        if (player.Teams.Points >= 5)
+                       
+
+                        if (!string.IsNullOrEmpty(result) && -1<points && points<14)
+                            points = int.Parse(result);
+                        else
                         {
-                            OnWinnerFoundEvent(new WinnerInformationEventArgs {WinnerTeam = player.Teams});
-                            return;
+                            i++;
+                            continue;
                         }
+
+                        break;
                     }
 
+                    // update points for gameplayer's team
+                    
+                    player.Teams.Points +=points;
+
+                        
+                    
                     //add a gameround player
                     var gameRoundPlayer = new GameRoundPlayers
                     {
@@ -117,6 +128,9 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     Thread.Sleep(1000);
                 }
             }
+
+            
+            
 
             // Enter trump card
             Console.WriteLine("Enter trump card");
@@ -147,14 +161,28 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
                 Game.GameRounds.Add(currentRound);
                 _repoGame._db.GameRounds.Add(currentRound);
-                _repoGame._db.SaveChanges();
+              
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 Console.ReadLine();
             }
-
+            foreach (var team in Game.Teams)
+            {
+                if (team.Points > 6)
+                    team.Points -= 6;
+                else
+                {
+                    team.Points = 0;
+                }
+                if (team.Points >= 5)
+                {
+                    OnWinnerFoundEvent(new WinnerInformationEventArgs { WinnerTeam = team });
+                    return;
+                }
+            }
+            _repoGame._db.SaveChanges();
             // Back to InGameView
             OnRoundAddedEvent(new GameInformationEventArg {Game = Game});
         }

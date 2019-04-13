@@ -36,20 +36,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teams",
-                columns: table => new
-                {
-                    TeamId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Points = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teams", x => x.TeamId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Games",
                 columns: table => new
                 {
@@ -70,6 +56,51 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                         principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameRounds",
+                columns: table => new
+                {
+                    GameRoundsId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoundNumber = table.Column<int>(nullable: false),
+                    Trump = table.Column<string>(nullable: true),
+                    DealerPosition = table.Column<int>(nullable: false),
+                    Ended = table.Column<bool>(nullable: false),
+                    Started = table.Column<bool>(nullable: false),
+                    GamesId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameRounds", x => x.GameRoundsId);
+                    table.ForeignKey(
+                        name: "FK_GameRounds_Games_GamesId",
+                        column: x => x.GamesId,
+                        principalTable: "Games",
+                        principalColumn: "GamesId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    TeamId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Points = table.Column<int>(nullable: false),
+                    GamesId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.TeamId);
+                    table.ForeignKey(
+                        name: "FK_Teams_Games_GamesId",
+                        column: x => x.GamesId,
+                        principalTable: "Games",
+                        principalColumn: "GamesId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,31 +134,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameRounds",
-                columns: table => new
-                {
-                    GameRoundsId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoundNumber = table.Column<int>(nullable: false),
-                    Trump = table.Column<string>(nullable: true),
-                    DealerPosition = table.Column<int>(nullable: false),
-                    Ended = table.Column<bool>(nullable: false),
-                    Started = table.Column<bool>(nullable: false),
-                    GamesId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameRounds", x => x.GameRoundsId);
-                    table.ForeignKey(
-                        name: "FK_GameRounds_Games_GamesId",
-                        column: x => x.GamesId,
-                        principalTable: "Games",
-                        principalColumn: "GamesId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +199,11 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                 table: "Games",
                 column: "LocationId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teams_GamesId",
+                table: "Teams",
+                column: "GamesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

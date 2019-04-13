@@ -21,7 +21,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public StartPageView()
         {
             Console.WriteLine("Loading Whist Database...");
-            StartGame();
+            
         }
 
         protected virtual void OnFindPreviousGame(EventArgs e)
@@ -54,10 +54,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     {
                         case ConsoleKey.D1:
                             OnGameHasStarted(EventArgs.Empty);
-                            return; 
+                            break; 
                         case ConsoleKey.D2:
                             OnFindPreviousGame(EventArgs.Empty);
-                            return; 
+                            break; 
                         default:
                             throw new InputException("Invalid Input!");
                     }

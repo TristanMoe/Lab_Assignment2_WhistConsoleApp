@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Assignment2_WhistConsoleApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190412161121_initial")]
+    [Migration("20190412201757_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,15 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("GamesId");
+
                     b.Property<string>("Name");
 
                     b.Property<int>("Points");
 
                     b.HasKey("TeamId");
+
+                    b.HasIndex("GamesId");
 
                     b.ToTable("Teams");
                 });
@@ -163,6 +167,14 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.ToTable("Players");
                 });
 
+            modelBuilder.Entity("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", b =>
+                {
+                    b.HasOne("Lab_Assignment2_WhistPointCalculator.Games", "Games")
+                        .WithMany("Teams")
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GamePlayer", b =>
                 {
                     b.HasOne("Lab_Assignment2_WhistPointCalculator.Games", "Game")
@@ -178,7 +190,7 @@ namespace Lab_Assignment2_WhistConsoleApp.Migrations
                     b.HasOne("Lab_Assignment2_WhistConsoleApp.DATA.Team.Team", "Teams")
                         .WithMany("GamePlayers")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Lab_Assignment2_WhistPointCalculator.GameRoundPlayers", b =>
