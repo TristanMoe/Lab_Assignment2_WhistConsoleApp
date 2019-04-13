@@ -38,12 +38,13 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             var game = _db.Games
                 .Include(g => g.Location)
                 .Include(g => g.GamePlayers)
+                
                 .ThenInclude(gp => gp.Player)
+                .Include(t => t.Teams)
                 .Include(g => g.GameRounds)
                 .ThenInclude(gr => gr.GRPs)
                 .FirstOrDefault(g => g.Name == gamename); 
-            if(game == null)
-                throw new Exception("Game Was Not Found!");
+           
 
             return game; 
         }
@@ -100,8 +101,8 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
                 gameplayers.Add(gameplayer);
             }
 
-
-
+            game.GameRounds=new List<GameRounds>();
+            game.Teams = teams;
 
             game.GamePlayers = gameplayers;
 
@@ -110,15 +111,14 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             game.Updated = DateTime.Now;
             game.Ended = false;
             game.Started = true;
-            game.GamePlayers = new List<GamePlayer>();
-            game.GameRounds = new List<GameRounds>();
-            foreach (var gameplayer in gameplayers)
+            
+           /* foreach (var gameplayer in gameplayers)
             {
                 _db.GamePlayers.Add(gameplayer);
             }
             _db.Teams.AddRange(teams);
             _db.Locations.Add(location);
-            _db.Players.AddRange(players);
+            _db.Players.AddRange(players);*/
             _db.Games.Add(game);
             _db.SaveChanges();
            

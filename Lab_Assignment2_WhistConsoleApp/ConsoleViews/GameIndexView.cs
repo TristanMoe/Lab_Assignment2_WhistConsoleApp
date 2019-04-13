@@ -25,36 +25,36 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         {
             Repo = new RepoGame(db);
             StartPageView = startPageView;
-            startPageView.FindPreviousGame += HandlePreviousGameEvent; 
+            StartPageView.FindPreviousGame += HandlePreviousGameEvent; 
         }
 
         public void HandlePreviousGameEvent(object sender, EventArgs e)
         {
+            int i = 0;
             while (true)
             {
                 Console.Clear();
-
+                if(i!=0)
+                    Console.WriteLine("Game was not found. Please try again with another name");
                 PrintGames();
-                Console.WriteLine("Please Enter The Name Of A Game You Wish To Inspect: ");
-                Console.WriteLine("Press B To Go Back");
-                Console.Write("Game: ");
+                Console.Write("Please Enter The Name Of A Game You Wish To Inspect or enter to go back: ");
                 var input = Console.ReadLine();
-
-                try
+                if (input == "")
                 {
-                    if (input?.ToLower() == "b")
-                        StartPageView.StartGame();
-
-                    var game = Repo.GetGame(input);
-                    var eventArgs = new GameEventArgs(){Game = game};
-                    PrintGameInformation?.Invoke(this, eventArgs);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.ReadLine();
                     return;
                 }
+                
+                    var game = Repo.GetGame(input);
+                    if (game == null)
+                    {
+                        i++;
+                        continue;
+
+                    }
+                       
+                    var eventArgs = new GameEventArgs(){Game = game};
+                    PrintGameInformation?.Invoke(this, eventArgs);
+                
             }
         }
 

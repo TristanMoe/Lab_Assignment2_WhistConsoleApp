@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 using System.Text;
+using Lab_Assignment2_WhistConsoleApp.DATA.Team;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Lab_Assignment2_WhistPointCalculator
@@ -34,5 +35,10 @@ namespace Lab_Assignment2_WhistPointCalculator
 
         //Navigation Property for Gameplayers
         public List<GamePlayer> GamePlayers { get; set; }
+
+     
+
+        public List<Team> Teams { get; set; }
+
     }
 }
