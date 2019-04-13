@@ -8,6 +8,7 @@ using Lab_Assignment2_WhistConsoleApp.Events;
 using Lab_Assignment2_WhistConsoleApp.Repositories;
 using Lab_Assignment2_WhistPointCalculator;
 using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Parsing;
 
 namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 {
@@ -91,6 +92,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                     if (!string.IsNullOrEmpty(result))
                         points = int.Parse(result);
 
+
                     // update points for gameplayer's team
                     if (points > 6)
                     {
@@ -115,6 +117,10 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 {
                     Console.WriteLine(ex);
                     Thread.Sleep(1000);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
 

@@ -20,6 +20,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         private RepoGame Repo { get; set; }
         private StartPageView StartPageView { get; set; }
         public event EventHandler<GameEventArgs> PrintGameInformation;
+        private event EventHandler NavigateBack;
         public GameIndexView(StartPageView startPageView, DataContext db)
         {
             Repo = new RepoGame(db);
@@ -34,11 +35,16 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                 Console.Clear();
 
                 PrintGames();
-                Console.Write("Please Enter The Name Of A Game You Wish To Inspect: ");
+                Console.WriteLine("Please Enter The Name Of A Game You Wish To Inspect: ");
+                Console.WriteLine("Press B To Go Back");
+                Console.Write("Game: ");
                 var input = Console.ReadLine();
 
                 try
                 {
+                    if (input?.ToLower() == "b")
+                        StartPageView.StartGame();
+
                     var game = Repo.GetGame(input);
                     var eventArgs = new GameEventArgs(){Game = game};
                     PrintGameInformation?.Invoke(this, eventArgs);
