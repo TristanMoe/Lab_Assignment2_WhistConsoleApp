@@ -17,4 +17,11 @@ If the user wants to find a game played, they follow these steps:
 4. The details are shown
 
 # What Should i do before running it?
-This is a test program, so you should create a database with the name WhistDatabase locally or modify the connection string inside the source code. If you create the database it is necessary to update the database with the current migration and tables.
+This is a test program, so you should create a database with the name WhistDatabase locally 
+or modify the connection string inside the source code. If you create the database it is 
+necessary to update the database with the current migration and tables.
+
+If you experience any weird erros,
+we advise to delete any migration and run these commands in Package Manager Console:
+Add-Migration TestCreation
+Update-Database 
