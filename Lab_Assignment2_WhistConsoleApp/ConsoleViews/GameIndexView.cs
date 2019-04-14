@@ -20,8 +20,8 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         private RepoGame Repo { get; set; }
         private StartPageView StartPageView { get; set; }
         public event EventHandler<GameEventArgs> PrintGameInformation;
-     
-        public GameIndexView(StartPageView startPageView,  DataContext db)
+        private event EventHandler NavigateBack;
+        public GameIndexView(StartPageView startPageView, DataContext db)
         {
             Repo = new RepoGame(db);
             StartPageView = startPageView;

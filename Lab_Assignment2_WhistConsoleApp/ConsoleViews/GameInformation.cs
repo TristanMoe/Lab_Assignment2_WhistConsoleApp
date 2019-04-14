@@ -62,6 +62,11 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
 
                 Console.Write("Please Enter Your Game Name: ");
                 Gamename = Console.ReadLine();
+                if (Gamename?.ToLower() == "b")
+                {
+                    Console.WriteLine("Nice Try");
+                    Gamename = "Unknown";
+                }
 
                 Console.Write("Please Enter Location: ");
                 Location = Console.ReadLine();
