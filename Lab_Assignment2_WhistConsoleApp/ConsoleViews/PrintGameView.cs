@@ -82,7 +82,7 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
             {
                 if(team.Points>=5)
                     winner=team;
-                Console.WriteLine($"Team {team.Name} has {team.Points }");
+                Console.WriteLine($"Team {team.Name} has {team.Points} points");
             }
             if(winner!=null)
                 Console.WriteLine($"Winner of game is {winner.Name}");

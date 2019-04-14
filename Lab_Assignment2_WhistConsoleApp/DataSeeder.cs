@@ -17,7 +17,7 @@ namespace Lab_Assignment2_WhistConsoleApp
             {
                 Ended = false,
                 Location = location,
-                Name = "SuperWeebTanks",
+                Name = "The Ultimate Game",
                 Started = true,
                 Updated = DateTime.Now,
                 GamePlayers = new List<GamePlayer>(),
@@ -31,8 +31,8 @@ namespace Lab_Assignment2_WhistConsoleApp
             var marcus = new Players() {FirstName = "Marcus", LastName = "Gasberg", GamePlayers = new List<GamePlayer>() };
             var mathias = new Players() {FirstName = "Mathias", LastName = "Hansen", GamePlayers = new List<GamePlayer>() };
 
-            var theJedis = new Team() {Name = "TheJedis", Points = 2,GamePlayers = new List<GamePlayer>()};
-            var memers = new Team() { Name = "Memers", Points = 3, GamePlayers = new List<GamePlayer>()};
+            var theJedis = new Team() {Name = "TheJedis", Points = 8,GamePlayers = new List<GamePlayer>()};
+            var memers = new Team() { Name = "Memers", Points = 6, GamePlayers = new List<GamePlayer>()};
 
             var tristanGp = new GamePlayer() {Game = game, Player = tristan, PlayerPosition = 1, Teams = theJedis, GRPs = new List<GameRoundPlayers>()};
             var martinGp = new GamePlayer() {Game = game, Player = martin, PlayerPosition = 2, Teams = theJedis, GRPs = new List<GameRoundPlayers>()};

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Assignment2_WhistConsoleApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190414170527_initial")]
-    partial class initial
+    [Migration("20190414194417_InitialCreation")]
+    partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

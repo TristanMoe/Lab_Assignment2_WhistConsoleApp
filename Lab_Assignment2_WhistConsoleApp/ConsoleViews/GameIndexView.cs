@@ -31,19 +31,21 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
         public void HandlePreviousGameEvent(object sender, EventArgs e)
         {
             int i = 0;
-            while (true)
+            try
             {
-                Console.Clear();
-                if(i!=0)
-                    Console.WriteLine("Game was not found. Please try again with another name");
-                PrintGames();
-                Console.Write("Please Enter The Name Of A Game You Wish To Inspect or enter to go back: ");
-                var input = Console.ReadLine();
-                if (input == "")
+                while (true)
                 {
-                    return;
-                }
-                
+                    Console.Clear();
+                    if (i != 0)
+                        Console.WriteLine("Game was not found. Please try again with another name");
+                    PrintGames();
+                    Console.Write("Please Enter The Name Of A Game You Wish To Inspect or enter to go back: ");
+                    var input = Console.ReadLine();
+                    if (input == "")
+                    {
+                        return;
+                    }
+
                     var game = Repo.GetGame(input);
                     if (game == null)
                     {
@@ -51,10 +53,15 @@ namespace Lab_Assignment2_WhistConsoleApp.ConsoleViews
                         continue;
 
                     }
-                       
-                    var eventArgs = new GameEventArgs(){Game = game};
+
+                    var eventArgs = new GameEventArgs() {Game = game};
                     PrintGameInformation?.Invoke(this, eventArgs);
-                
+                }
+            }
+            catch (DbException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Thread.Sleep(2);
             }
         }
 

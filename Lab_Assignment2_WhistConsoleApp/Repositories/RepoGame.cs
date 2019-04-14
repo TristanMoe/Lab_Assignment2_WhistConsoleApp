@@ -38,7 +38,6 @@ namespace Lab_Assignment2_WhistConsoleApp.Repositories
             var game = _db.Games
                 .Include(g => g.Location)
                 .Include(g => g.GamePlayers)
-                
                 .ThenInclude(gp => gp.Player)
                 .Include(t => t.Teams)
                 .Include(g => g.GameRounds)
