@@ -15,3 +15,6 @@ If the user wants to find a game played, they follow these steps:
 2. Input the __Game name__ to show details of
 3. __Press Enter__
 4. The details are shown
+
+# What Should i do before running it?
+This is a test program, so you should create a database with the name WhistDatabase locally or modify the connection string inside the source code. If you create the database it is necessary to update the database with the current migration and tables.
