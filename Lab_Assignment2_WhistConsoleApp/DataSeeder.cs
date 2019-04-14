@@ -10,7 +10,7 @@ namespace Lab_Assignment2_WhistConsoleApp
     {
         public static void SeedData(this DataContext d)
         {
-            /*if (d.Games.Any())
+            if (d.Games.Any())
                 return;
             var location = new Location() {Name = "Kaelderen"};
             var game = new Games()
@@ -21,7 +21,9 @@ namespace Lab_Assignment2_WhistConsoleApp
                 Started = true,
                 Updated = DateTime.Now,
                 GamePlayers = new List<GamePlayer>(),
-                GameRounds = new List<GameRounds>()
+                GameRounds = new List<GameRounds>(),
+                Teams=new List<Team>()
+
             };
 
             var tristan = new Players() {FirstName = "Tristan", LastName = "Moller", GamePlayers = new List<GamePlayer>()};
@@ -54,12 +56,14 @@ namespace Lab_Assignment2_WhistConsoleApp
                 marcusGp,
                 mathiasGp
             });
-         
+            
             game.GameRounds.Add(gameRound);
-          
+            
+            game.Teams.Add(theJedis);
+            game.Teams.Add(memers);
 
             d.Games.Add(game);
-            d.GameRounds.Add(gameRound);
+            /*d.GameRounds.Add(gameRound);
             d.GameRoundPlayers.Add(tristanGrp);
             d.GameRoundPlayers.Add(martinGrp);
             d.GameRoundPlayers.Add(marcusGrp);
@@ -74,8 +78,8 @@ namespace Lab_Assignment2_WhistConsoleApp
             d.Players.Add(mathias);
             d.Teams.Add(theJedis);
             d.Teams.Add(memers);
-            d.Locations.Add(location);
-            d.SaveChanges();*/
+            d.Locations.Add(location);*/
+            d.SaveChanges();
         }
     }
 }
